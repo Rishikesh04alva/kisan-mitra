@@ -42,6 +42,9 @@ jobs:
           G=android/app/build.gradle
           sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 23/' "$G"
           sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 23/' "$G"
+          sed -i 's/compileSdkVersion flutter.compileSdkVersion/compileSdkVersion 35/' "$G"
+          sed -i 's/compileSdk = flutter.compileSdkVersion/compileSdk = 35/' "$G"
+          sed -i 's/compileSdk = 34/compileSdk = 35/' "$G"
 
       - name: Wire Firebase google-services (if config provided)
         env:
