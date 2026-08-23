@@ -73,10 +73,11 @@ class TfliteService {
     return List.generate(_inputSize, (y) {
       return List.generate(_inputSize, (x) {
         final px = source.getPixel(x, y);
+        // Match tf.keras mobilenet_v2.preprocess_input: [0,255] -> [-1,1].
         return <double>[
-          px.r.toDouble() / 255.0,
-          px.g.toDouble() / 255.0,
-          px.b.toDouble() / 255.0,
+          px.r.toDouble() / 127.5 - 1.0,
+          px.g.toDouble() / 127.5 - 1.0,
+          px.b.toDouble() / 127.5 - 1.0,
         ];
       });
     });
