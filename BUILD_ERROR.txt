@@ -33,17 +33,28 @@ Preparing "Install Android SDK Platform 31 (revision 1)".
 Installing Android SDK Platform 31 in /usr/local/lib/android/sdk/platforms/android-31
 "Install Android SDK Platform 31 (revision 1)" complete.
 "Install Android SDK Platform 31 (revision 1)" finished.
-Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 4048 bytes (99.8% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
-Caught exception: Already watching path: /home/runner/work/kisan-mitra/kisan-mitra/android
-ERROR: Missing classes detected while running R8. Please add the missing classes or apply additional keep rules that are generated in /home/runner/work/kisan-mitra/kisan-mitra/build/app/outputs/mapping/release/missing_rules.txt.
-ERROR: R8: Missing class org.tensorflow.lite.gpu.GpuDelegateFactory$Options (referenced from: void org.tensorflow.lite.gpu.GpuDelegate.<init>() and 1 other context)
+lib/providers/assistant_provider.dart:44:16: Error: The method 'saveSetting' isn't defined for the class 'AppDatabase'.
+ - 'AppDatabase' is from 'package:kisan_mitra/core/db/app_database.dart' ('lib/core/db/app_database.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'saveSetting'.
+      await db.saveSetting(_kAiKeySetting, k);
+               ^^^^^^^^^^^
+lib/ui/guide/fertilizer_guide_screen.dart:27:42: Error: Undefined name 'kBorderWidth'.
+          preferredSize: Size.fromHeight(kBorderWidth),
+                                         ^^^^^^^^^^^^
+lib/ui/guide/fertilizer_guide_screen.dart:28:34: Error: Undefined name 'kBorderWidth'.
+          child: Divider(height: kBorderWidth, thickness: kBorderWidth, color: AppColors.ink),
+                                 ^^^^^^^^^^^^
+lib/ui/guide/fertilizer_guide_screen.dart:28:59: Error: Undefined name 'kBorderWidth'.
+          child: Divider(height: kBorderWidth, thickness: kBorderWidth, color: AppColors.ink),
+                                                          ^^^^^^^^^^^^
+Target kernel_snapshot_program failed: Exception
+
 
 FAILURE: Build failed with an exception.
 
 * What went wrong:
-Execution failed for task ':app:minifyReleaseWithR8'.
-> A failure occurred while executing com.android.build.gradle.internal.tasks.R8Task$R8Runnable
-   > Compilation failed to complete
+Execution failed for task ':app:compileFlutterBuildRelease'.
+> Process 'command '/opt/hostedtoolcache/flutter/stable-3.24.5-x64/flutter/bin/flutter'' finished with non-zero exit value 1
 
 * Try:
 > Run with --stacktrace option to get the stack trace.
@@ -51,6 +62,6 @@ Execution failed for task ':app:minifyReleaseWithR8'.
 > Run with --scan to get full insights.
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 4m 16s
-Running Gradle task 'assembleRelease'...                          256.7s
+BUILD FAILED in 2m 57s
+Running Gradle task 'assembleRelease'...                          177.5s
 Gradle task assembleRelease failed with exit code 1
