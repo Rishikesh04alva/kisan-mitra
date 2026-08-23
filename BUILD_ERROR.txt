@@ -1,0 +1,110 @@
+
+Running Gradle task 'assembleRelease'...                        
+Warning: The plugin flutter_plugin_android_lifecycle requires Android SDK version 35 or higher.
+For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
+Your project is configured to compile against Android SDK 34, but the following plugin(s) require to be compiled against a higher Android SDK version:
+- flutter_plugin_android_lifecycle compiles against Android SDK 35
+Fix this issue by compiling against the highest Android SDK version (they are backward compatible).
+Add the following to /home/runner/work/kisan-mitra/kisan-mitra/android/app/build.gradle:
+
+    android {
+        compileSdk = 35
+        ...
+    }
+
+Checking the license for package Android SDK Build-Tools 33.0.1 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Build-Tools 33.0.1 accepted.
+Preparing "Install Android SDK Build-Tools 33.0.1 v.33.0.1".
+"Install Android SDK Build-Tools 33.0.1 v.33.0.1" ready.
+Installing Android SDK Build-Tools 33.0.1 in /usr/local/lib/android/sdk/build-tools/33.0.1
+"Install Android SDK Build-Tools 33.0.1 v.33.0.1" complete.
+"Install Android SDK Build-Tools 33.0.1 v.33.0.1" finished.
+Checking the license for package Android SDK Platform 33 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 33 accepted.
+Preparing "Install Android SDK Platform 33 (revision 3)".
+"Install Android SDK Platform 33 (revision 3)" ready.
+Installing Android SDK Platform 33 in /usr/local/lib/android/sdk/platforms/android-33
+"Install Android SDK Platform 33 (revision 3)" complete.
+"Install Android SDK Platform 33 (revision 3)" finished.
+Checking the license for package Android SDK Platform 31 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 31 accepted.
+Preparing "Install Android SDK Platform 31 (revision 1)".
+"Install Android SDK Platform 31 (revision 1)" ready.
+Installing Android SDK Platform 31 in /usr/local/lib/android/sdk/platforms/android-31
+"Install Android SDK Platform 31 (revision 1)" complete.
+"Install Android SDK Platform 31 (revision 1)" finished.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+lib/ui/auth/consent_screen.dart:97:75: Error: The getter 'kBorderWidth' isn't defined for the class '_ConsentScreenState'.
+ - '_ConsentScreenState' is from 'package:kisan_mitra/ui/auth/consent_screen.dart' ('lib/ui/auth/consent_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kBorderWidth'.
+                          border: Border.all(color: AppColors.ink, width: kBorderWidth),
+                                                                          ^^^^^^^^^^^^
+lib/ui/auth/login_screen.dart:191:63: Error: The getter 'kBorderWidth' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kBorderWidth'.
+              border: Border.all(color: AppColors.ink, width: kBorderWidth),
+                                                              ^^^^^^^^^^^^
+lib/ui/auth/login_screen.dart:192:51: Error: The getter 'kRadius' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kRadius'.
+              borderRadius: BorderRadius.circular(kRadius),
+                                                  ^^^^^^^
+lib/ui/auth/login_screen.dart:213:71: Error: The getter 'kBorderWidth' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kBorderWidth'.
+                  borderSide: BorderSide(color: AppColors.ink, width: kBorderWidth),
+                                                                      ^^^^^^^^^^^^
+lib/ui/auth/login_screen.dart:214:55: Error: The getter 'kRadius' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kRadius'.
+                  borderRadius: BorderRadius.circular(kRadius),
+                                                      ^^^^^^^
+lib/ui/auth/login_screen.dart:217:71: Error: The getter 'kBorderWidth' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kBorderWidth'.
+                  borderSide: BorderSide(color: AppColors.ink, width: kBorderWidth + 1),
+                                                                      ^^^^^^^^^^^^
+lib/ui/auth/login_screen.dart:218:55: Error: The getter 'kRadius' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kRadius'.
+                  borderRadius: BorderRadius.circular(kRadius),
+                                                      ^^^^^^^
+lib/ui/auth/login_screen.dart:244:63: Error: The getter 'kBorderWidth' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kBorderWidth'.
+          borderSide: BorderSide(color: AppColors.ink, width: kBorderWidth),
+                                                              ^^^^^^^^^^^^
+lib/ui/auth/login_screen.dart:245:47: Error: The getter 'kRadius' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kRadius'.
+          borderRadius: BorderRadius.circular(kRadius),
+                                              ^^^^^^^
+lib/ui/auth/login_screen.dart:248:63: Error: The getter 'kBorderWidth' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kBorderWidth'.
+          borderSide: BorderSide(color: AppColors.ink, width: kBorderWidth + 1),
+                                                              ^^^^^^^^^^^^
+lib/ui/auth/login_screen.dart:249:47: Error: The getter 'kRadius' isn't defined for the class '_LoginScreenState'.
+ - '_LoginScreenState' is from 'package:kisan_mitra/ui/auth/login_screen.dart' ('lib/ui/auth/login_screen.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'kRadius'.
+          borderRadius: BorderRadius.circular(kRadius),
+                                              ^^^^^^^
+Target kernel_snapshot_program failed: Exception
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildRelease'.
+> Process 'command '/opt/hostedtoolcache/flutter/stable-3.24.5-x64/flutter/bin/flutter'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 3m 50s
+Running Gradle task 'assembleRelease'...                          231.0s
+Gradle task assembleRelease failed with exit code 1
