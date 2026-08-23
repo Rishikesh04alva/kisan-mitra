@@ -45,6 +45,7 @@ def find_class_dir(root):
 
 
 def main():
+    os.makedirs(OUT_DIR, exist_ok=True)
     base = find_class_dir(DATA_ROOT)
     class_names = sorted(
         d for d in os.listdir(base)
