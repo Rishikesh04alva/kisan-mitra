@@ -65,7 +65,7 @@ class TfliteService {
     final x0 = (w - side) ~/ 2, y0 = (h - side) ~/ 2;
     final cropped = img.copyCrop(src, x: x0, y: y0, width: side, height: side);
     return img.copyResize(cropped, width: _inputSize, height: _inputSize,
-        interpolation: Interpolation.linear);
+        interpolation: img.Interpolation.linear);
   }
 
   List<List<List<double>>> _tensor(img.Image im, bool flip) {
