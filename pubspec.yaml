@@ -1,0 +1,37 @@
+name: kisan_mitra
+description: Offline-first crop advisory app for Indian farmers (Smart India Hackathon).
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  provider: ^6.1.2
+  sqflite: ^2.3.3
+  path: ^1.9.0
+  http: ^1.2.2
+  image_picker: ^1.1.2
+  image: ^4.2.0
+  tflite_flutter: ^0.11.0
+  speech_to_text: ^6.6.2
+  shared_preferences: ^2.3.2
+  workmanager: ^0.5.2
+  connectivity_plus: ^6.0.5
+  intl: ^0.19.0
+  url_launcher: ^6.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/data/
+    - assets/models/

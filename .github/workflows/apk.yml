@@ -1,0 +1,49 @@
+name: Build Kisan Mitra APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+          channel: stable
+          cache: true
+
+      - name: Generate Android platform scaffold
+        run: flutter create . --platforms android --project-name kisan_mitra
+
+      - name: Inject runtime permissions into manifest
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO"/>\n    <uses-permission android:name="android.permission.INTERNET"/>\n</manifest>#' "$M"
+
+      - run: flutter pub get
+
+      - name: Static analysis (non-blocking)
+        run: flutter analyze
+        continue-on-error: true
+
+      - name: Build release APKs split by ABI
+        run: flutter build apk --release --split-per-abi
+
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kisan-mitra-apks
+          retention-days: 30
+          path: |
+            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk

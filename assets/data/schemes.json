@@ -1,0 +1,189 @@
+[
+  {
+    "id": "pm_kisan",
+    "nameEn": "PM-KISAN (Samman Nidhi)",
+    "nameHi": "पीएम-किसान (सम्मान निधि)",
+    "nameMr": "पीएम-किसान (सन्मान निधी)",
+    "category": "INCOME",
+    "state": "ALL",
+    "eligibility": [
+      "Landholding farmer family (husband, wife, minor children)",
+      "Institutional/all landholding farmers eligible",
+      "Excluded: income tax payers, pensioners above Rs 10000/month, institutional landholders"
+    ],
+    "benefitEn": "Rs 6000 per year paid in 3 equal installments of Rs 2000 directly to bank account.",
+    "benefitHi": "हर साल 6000 रुपये, 3 किस्तों में (2000-2000) सीधे बैंक खाते में।",
+    "benefitMr": "दरवर्षी 6000 रुपये, 3 हप्त्यांत (2000-2000) थेट बँक खात्यात.",
+    "url": "https://pmkisan.gov.in",
+    "phone": "155261"
+  },
+  {
+    "id": "pmfby",
+    "nameEn": "PM Fasal Bima Yojana (Crop Insurance)",
+    "nameHi": "पीएम फसल बीमा योजना",
+    "nameMr": "पीएम पीक विमा योजना",
+    "category": "INSURANCE",
+    "state": "ALL",
+    "eligibility": [
+      "All farmers including sharecroppers and tenant farmers growing notified crops",
+      "Loanee farmers covered automatically; non-loanee can apply with land documents"
+    ],
+    "benefitEn": "Insurance at only 2% premium for kharif, 1.5% for rabi crops. Full claim support on notified calamities.",
+    "benefitHi": "खरीफ में सिर्फ 2% और रबी में 1.5% प्रीमियम पर फसल बीमा। सूखा/बाढ़ पर पूरा क्लेम।",
+    "benefitMr": "खरीपीसाठी फक्त 2% व रब्बीसाठी 1.5% प्रीमिअमवर पीक विमा. दुष्काळ/पूर झाल्यास पूर्ण क्लेम.",
+    "url": "https://pmfby.gov.in",
+    "phone": "14447"
+  },
+  {
+    "id": "kcc",
+    "nameEn": "Kisan Credit Card (KCC)",
+    "nameHi": "किसान क्रेडिट कार्ड (केसीसी)",
+    "nameMr": "किसान क्रेडिट कार्ड (KCC)",
+    "category": "CREDIT",
+    "state": "ALL",
+    "eligibility": [
+      "All farmers - owners, tenants, sharecroppers, SHG members",
+      "Collateral-free credit limit up to Rs 2 lakh"
+    ],
+    "benefitEn": "Cheap crop loans at 4% effective interest with prompt repayment. Covers cultivation cost + post-harvest expenses.",
+    "benefitHi": "4% प्रभावी ब्याज पर सस्ता फसल ऋण। खेती और फसल कटाई के बाद के खर्च शामिल।",
+    "benefitMr": "4% प्रभावी व्याजदरात स्वस्त पीक कर्ज. लागवड व काढणीनंतरचा खर्च समाविष्ट.",
+    "url": "https://www.myscheme.gov.in/schemes/kcc",
+    "phone": ""
+  },
+  {
+    "id": "shc",
+    "nameEn": "Soil Health Card Scheme",
+    "nameHi": "मृदा स्वास्थ्य कार्ड योजना",
+    "nameMr": "मृदा आरोग्य कार्ड योजना",
+    "category": "SOIL",
+    "state": "ALL",
+    "eligibility": [
+      "All farmers with agricultural land",
+      "Free soil testing once every 2 years"
+    ],
+    "benefitEn": "Free soil test report with fertilizer recommendations — saves up to 10% input cost and increases yield.",
+    "benefitHi": "मुफ्त मिट्टी जाँच रिपोर्ट और खाद की सलाह — लागत 10% तक बचत, उपज बढ़ती है।",
+    "benefitMr": "मोफत माती परीक्षण अहवाल व खत शिफारश — 10% इतका खर्च वाचतो, उत्पादन वाढते.",
+    "url": "https://soilhealth.dac.gov.in",
+    "phone": "18001801551"
+  },
+  {
+    "id": "pm_kusum",
+    "nameEn": "PM-KUSUM Solar Pump Scheme",
+    "nameHi": "पीएम-कुसुम सोलर पंप योजना",
+    "nameMr": "पीएम-कुसुम सोलर पंप योजना",
+    "category": "ENERGY",
+    "state": "ALL",
+    "eligibility": [
+      "Individual farmers, FPOs, panchayats, cooperatives, water user associations",
+      "Priority to small & marginal farmers"
+    ],
+    "benefitEn": "Up to 90% subsidy (60% central+state + 30% loan) on standalone solar agriculture pumps up to 7.5 HP.",
+    "benefitHi": "7.5 HP तक के सोलर पंप पर 90% तक सब्सिडी (60% केंद्र+राज्य, 30% ऋण)।",
+    "benefitMr": "7.5 HP पर्यंत सोलर पंपवर 90% पर्यंत अनुदान (60% केंद्र+राज्य, 30% कर्ज).",
+    "url": "https://pmkusum.mnre.gov.in",
+    "phone": ""
+  },
+  {
+    "id": "enam",
+    "nameEn": "e-NAM Online Mandi Trading",
+    "nameHi": "ई-नाम ऑनलाइन मंडी",
+    "nameMr": "ई-नाम ऑनलाईन मंडी",
+    "category": "MARKET",
+    "state": "ALL",
+    "eligibility": [
+      "Any farmer registered at a connected APMC mandi",
+      "Free registration with bank account and land record"
+    ],
+    "benefitEn": "Sell produce online to buyers across India. Transparent price discovery, direct online payment to your account.",
+    "benefitHi": "पूरे भारत के खरीदारों को ऑनलाइन बिक्री। पारदर्शी भाव, सीधा भुगतान खाते में।",
+    "benefitMr": "संपूर्ण भारतातील खरेदीदारांना ऑनलाईन विक्री. पारदर्शक भाव, थेट खात्यात पैसे.",
+    "url": "https://enam.gov.in",
+    "phone": ""
+  },
+  {
+    "id": "pkvy",
+    "nameEn": "Paramparagat Krishi Vikas Yojana (Organic)",
+    "nameHi": "परम्परागत कृषि विकास योजना",
+    "nameMr": "परंपरागत कृषी विकास योजना",
+    "category": "ORGANIC",
+    "state": "ALL",
+    "eligibility": [
+      "Farmer groups of minimum 20 members",
+      "Form 50-acre (20 ha) organic clusters"
+    ],
+    "benefitEn": "Rs 50,000 per hectare over 3 years for organic inputs and certification assistance.",
+    "benefitHi": "3 साल में 50000 रुपये प्रति हेक्टेयर जैविक खाद और प्रमाणन के लिए।",
+    "benefitMr": "3 वर्षांत हेक्टरी 50,000 रुपये सेंद्रिय खत व प्रमाणीकरणासाठी.",
+    "url": "https://pgsindia-ncof.gov.in",
+    "phone": ""
+  },
+  {
+    "id": "pm_kisan_maandhan",
+    "nameEn": "PM Kisan Maandhan (Pension)",
+    "nameHi": "पीएम-किसान मानधन (पेंशन)",
+    "nameMr": "पीएम-किसान मानधन (पेन्शन)",
+    "category": "INCOME",
+    "state": "ALL",
+    "eligibility": [
+      "Small & marginal farmers aged 18-40 years",
+      "Landholding up to 2 hectares"
+    ],
+    "benefitEn": "Rs 3000 monthly pension after age 60 by contributing Rs 55-200/month. Government matches your contribution.",
+    "benefitHi": "60 साल के बाद 3000 रुपये महीना पेंशन। हर महीने 55-200 रुपये जमा करें, सरकार उतना ही देगी।",
+    "benefitMr": "60 वर्षांनंतर महिन्याला 3000 रुपये पेन्शन. दरमहा 55-200 रुपये भरा, सरकार इतकीच देईल.",
+    "url": "https://maandhan.in",
+    "phone": "18003446888"
+  },
+  {
+    "id": "agri_infra_fund",
+    "nameEn": "Agriculture Infrastructure Fund",
+    "nameHi": "कृषि अवसंरचना कोष",
+    "nameMr": "कृषी पायाभूत सुविधा निधी",
+    "category": "INFRA",
+    "state": "ALL",
+    "eligibility": [
+      "Farmers, FPOs, PACS, agri-entrepreneurs and startups",
+      "For warehouses, cold storage, sorting units etc."
+    ],
+    "benefitEn": "Loan up to Rs 2 crore with 3% interest subvention and credit guarantee cover for loans up to Rs 2 crore.",
+    "benefitHi": "2 करोड़ रुपये तक ऋण पर 3% ब्याज सहायता और क्रेडिट गारंटी। गोदाम, कोल्ड स्टोरेज के लिए।",
+    "benefitMr": "2 कोटी रुपयांपर्यंत कर्जवर 3% व्याज मदत व क्रेडिट हमी. गोदाम, कोल्ड स्टोरेजसाठी.",
+    "url": "https://agriinfra.dac.gov.in",
+    "phone": ""
+  },
+  {
+    "id": "rythu_bandhu",
+    "nameEn": "Rythu Bandhu (Telangana)",
+    "nameHi": "ऋतु बंधु (तेलंगाना)",
+    "nameMr": "ऋतु बंधू (तेलंगणा)",
+    "category": "INCOME",
+    "state": "TELANGANA",
+    "eligibility": [
+      "Farmer families of Telangana state with pattadar passbooks"
+    ],
+    "benefitEn": "Rs 10,000 per acre per year investment support for inputs, paid before each crop season.",
+    "benefitHi": "प्रति एकड़ प्रति वर्ष 10000 रुपये निवेश सहायता, हर फसल सीज़न से पहले।",
+    "benefitMr": "एकरी वर्षाला 10,000 रुपये गुंतवणूक मदत, प्रत्येक पीक हंगामापूर्वी.",
+    "url": "https://rythubandhu.telangana.gov.in",
+    "phone": "04023383520"
+  },
+  {
+    "id": "magel_shet_tale",
+    "nameEn": "Magel Tyala Shet Tale (Maharashtra)",
+    "nameHi": "मागेल त्याला शेत तळे (महाराष्ट्र)",
+    "nameMr": "मागेल त्याला शेततळे (महाराष्ट्र)",
+    "category": "WATER",
+    "state": "MAHARASHTRA",
+    "eligibility": [
+      "Small & marginal farmers in Maharashtra",
+      "Minimum 0.6 hectare cultivable land"
+    ],
+    "benefitEn": "Up to Rs 75,000 subsidy for farm pond construction for rainwater harvesting.",
+    "benefitHi": "शेत तालाब बनाने पर 75000 रुपये तक सब्सिडी।",
+    "benefitMr": "शेततळे बांधकामासाठी 75,000 रुपयांपर्यंत अनुदान.",
+    "url": "https://krishi.maharashtra.gov.in",
+    "phone": "18002330444"
+  }
+]

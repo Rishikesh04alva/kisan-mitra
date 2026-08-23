@@ -1,0 +1,103 @@
+[
+  {
+    "id": "rice",
+    "nameKey": "c_rice",
+    "icon": "🌾",
+    "waterIntervalDays": 3,
+    "harvestDays": 120,
+    "stages": [
+      {"from": 0, "to": 7, "label": "fx_basal"},
+      {"from": 20, "to": 40, "label": "fx_vegetative"},
+      {"from": 60, "to": 75, "label": "fx_flowering"},
+      {"from": 85, "to": 105, "label": "fx_grain_fill"}
+    ]
+  },
+  {
+    "id": "wheat",
+    "nameKey": "c_wheat",
+    "icon": "🌾",
+    "waterIntervalDays": 7,
+    "harvestDays": 120,
+    "stages": [
+      {"from": 0, "to": 7, "label": "fx_basal"},
+      {"from": 21, "to": 30, "label": "fx_vegetative"},
+      {"from": 55, "to": 65, "label": "fx_flowering"},
+      {"from": 75, "to": 95, "label": "fx_grain_fill"}
+    ]
+  },
+  {
+    "id": "cotton",
+    "nameKey": "c_cotton",
+    "icon": "🪴",
+    "waterIntervalDays": 7,
+    "harvestDays": 160,
+    "stages": [
+      {"from": 0, "to": 10, "label": "fx_basal"},
+      {"from": 30, "to": 60, "label": "fx_vegetative"},
+      {"from": 70, "to": 100, "label": "fx_flowering"},
+      {"from": 110, "to": 140, "label": "fx_grain_fill"}
+    ]
+  },
+  {
+    "id": "sugarcane",
+    "nameKey": "c_sugarcane",
+    "icon": "🎍",
+    "waterIntervalDays": 5,
+    "harvestDays": 300,
+    "stages": [
+      {"from": 0, "to": 15, "label": "fx_basal"},
+      {"from": 45, "to": 90, "label": "fx_vegetative"},
+      {"from": 150, "to": 200, "label": "fx_flowering"},
+      {"from": 220, "to": 270, "label": "fx_grain_fill"}
+    ]
+  },
+  {
+    "id": "tomato",
+    "nameKey": "c_tomato",
+    "icon": "🍅",
+    "waterIntervalDays": 2,
+    "harvestDays": 90,
+    "stages": [
+      {"from": 0, "to": 5, "label": "fx_basal"},
+      {"from": 20, "to": 35, "label": "fx_vegetative"},
+      {"from": 40, "to": 60, "label": "fx_flowering"}
+    ]
+  },
+  {
+    "id": "onion",
+    "nameKey": "c_onion",
+    "icon": "🧅",
+    "waterIntervalDays": 4,
+    "harvestDays": 110,
+    "stages": [
+      {"from": 0, "to": 7, "label": "fx_basal"},
+      {"from": 25, "to": 45, "label": "fx_vegetative"},
+      {"from": 60, "to": 80, "label": "fx_grain_fill"}
+    ]
+  },
+  {
+    "id": "soybean",
+    "nameKey": "c_soybean",
+    "icon": "🫘",
+    "waterIntervalDays": 6,
+    "harvestDays": 95,
+    "stages": [
+      {"from": 0, "to": 7, "label": "fx_basal"},
+      {"from": 25, "to": 40, "label": "fx_vegetative"},
+      {"from": 50, "to": 70, "label": "fx_flowering"}
+    ]
+  },
+  {
+    "id": "maize",
+    "nameKey": "c_maize",
+    "icon": "🌽",
+    "waterIntervalDays": 4,
+    "harvestDays": 100,
+    "stages": [
+      {"from": 0, "to": 7, "label": "fx_basal"},
+      {"from": 25, "to": 45, "label": "fx_vegetative"},
+      {"from": 55, "to": 75, "label": "fx_flowering"},
+      {"from": 80, "to": 95, "label": "fx_grain_fill"}
+    ]
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "greeting",
+    "keywords": {
+      "en": ["hello", "hi", "namaste", "hey", "good morning", "good evening"],
+      "hi": ["नमस्ते", "नमस्कार", "हैलो", "हेलो", "हाय"],
+      "mr": ["नमस्कार", "हॅलो", "हाय"]
+    }
+  },
+  {
+    "id": "water_status",
+    "keywords": {
+      "en": ["water", "irrigat", "moist", "watering today"],
+      "hi": ["पानी", "सिंचाई", "सींचाई"],
+      "mr": ["पाणी", "सिंचन"]
+    }
+  },
+  {
+    "id": "fertilizer",
+    "keywords": {
+      "en": ["fertiliz", "urea", "npk", "manure", "dose"],
+      "hi": ["खाद", "उर्वरक", "यूरिया", "खाद कब"],
+      "mr": ["खत", "युरिया", "खत कधी"]
+    }
+  },
+  {
+    "id": "disease_help",
+    "keywords": {
+      "en": ["disease", "leaf", "spot", "fungus", "pest", "insect", "yellow"],
+      "hi": ["बीमारी", "रोग", "पत्ता", "धब्बा", "फंगस", "कीट", "पीले"],
+      "mr": ["रोग", "पान", "डाग", "बुरशी", "किडे", "पिवळ"]
+    }
+  },
+  {
+    "id": "weather",
+    "keywords": {
+      "en": ["weather", "rain", "temperature", "forecast"],
+      "hi": ["मौसम", "बारिश", "तापमान"],
+      "mr": ["हवामान", "पाऊस", "तापमान"]
+    }
+  },
+  {
+    "id": "scheme_info",
+    "keywords": {
+      "en": ["scheme", "yojana", "subsidy", "government", "loan", "insurance", "pension", "sarkari"],
+      "hi": ["योजना", "सब्सिडी", "सरकारी", "ऋण", "बीमा", "पेंशन"],
+      "mr": ["योजना", "अनुदान", "शासकीय", "कर्ज", "विमा", "पेन्शन"]
+    }
+  },
+  {
+    "id": "thanks",
+    "keywords": {
+      "en": ["thanks", "thank you", "great"],
+      "hi": ["धन्यवाद", "शुक्रिया", "थैंक"],
+      "mr": ["धन्यवाद", "आभार"]
+    }
+  }
+]
