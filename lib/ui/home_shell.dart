@@ -59,7 +59,7 @@ class _HomeShellState extends State<HomeShell> {
 
   Future<void> _openLanguageSheet() async {
     final s = S.of(context);
-    await showNeoSheet(context, (sheetCtx) {
+    showNeoSheet(context, (sheetCtx) {
       final options = [
         ('en', 'English'),
         ('hi', 'हिन्दी'),
