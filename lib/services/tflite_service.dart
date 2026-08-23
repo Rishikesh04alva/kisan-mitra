@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart' show rootBundle;
@@ -10,11 +11,15 @@ class ScanPrediction {
   final String label;
   final double confidence;
   final bool demo;
+  final List<MapEntry<String, double>> top;
+  final bool uncertain;
 
   const ScanPrediction({
     required this.label,
     required this.confidence,
     this.demo = false,
+    this.top = const [],
+    this.uncertain = false,
   });
 }
 
@@ -23,6 +28,8 @@ class TfliteService {
   List<String> _labels = [];
   int _inputSize = 224;
   bool _loaded = false;
+
+  static const double _uncertainThreshold = 0.55;
 
   bool get isLoaded => _loaded && _interpreter != null;
 
@@ -36,7 +43,7 @@ class TfliteService {
       try {
         _interpreter = await Interpreter.fromAsset(
           kModelAsset,
-          options: InterpreterOptions()..threads = 2,
+          options: InterpreterOptions()..threads = 4,
         );
         final shape = _interpreter!.getInputTensor(0).shape;
         _inputSize = shape.length >= 3 ? shape[1] : 224;
@@ -49,37 +56,92 @@ class TfliteService {
     }
   }
 
+  /// Center-crops to a square (leaf fills frame, background trimmed),
+  /// resizes, and averages predictions over 2 augmented views
+  /// (original + horizontal flip) for more stable results.
+  img.Image _prepare(img.Image src) {
+    final w = src.width, h = src.height;
+    final side = w < h ? w : h;
+    final x0 = (w - side) ~/ 2, y0 = (h - side) ~/ 2;
+    final cropped = img.copyCrop(src, x: x0, y: y0, width: side, height: side);
+    return img.copyResize(cropped, width: _inputSize, height: _inputSize,
+        interpolation: Interpolation.linear);
+  }
+
+  List<List<List<double>>> _tensor(img.Image im, bool flip) {
+    final source = flip ? img.flipHorizontal(im) : im;
+    return List.generate(_inputSize, (y) {
+      return List.generate(_inputSize, (x) {
+        final px = source.getPixel(x, y);
+        return <double>[
+          px.r.toDouble() / 255.0,
+          px.g.toDouble() / 255.0,
+          px.b.toDouble() / 255.0,
+        ];
+      });
+    });
+  }
+
+  void _runInference(List<List<List<double>>> input, List<double> out) {
+    _interpreter!.run([input], [out]);
+  }
+
   ScanPrediction predict(Uint8List bytes) {
     if (!isLoaded) {
-      if (kDemoModelFallback) return _demoPredict(bytes);
+      if (kDemoModelFallback) {
+        final p = _demoPredict(bytes);
+        return ScanPrediction(
+            label: p.label, confidence: p.confidence, demo: true, uncertain: true);
+      }
       throw StateError('model_missing');
     }
     final decoded = img.decodeImage(bytes);
     if (decoded == null) throw StateError('bad_image');
-    final resized = img.copyResize(decoded, width: _inputSize, height: _inputSize);
-    final input = [
-      List.generate(_inputSize, (y) {
-        return List.generate(_inputSize, (x) {
-          final px = resized.getPixel(x, y);
-          return <double>[
-            px.r.toDouble() / 255.0,
-            px.g.toDouble() / 255.0,
-            px.b.toDouble() / 255.0,
-          ];
-        });
-      }),
-    ];
-    final output = [List<double>.filled(_labels.length, 0.0)];
-    _interpreter!.run(input, output);
-    var bestIdx = 0;
-    var bestVal = -1.0;
-    for (var i = 0; i < output[0].length; i++) {
-      if (output[0][i] > bestVal) {
-        bestVal = output[0][i];
-        bestIdx = i;
+    final prepared = _prepare(decoded);
+
+    final n = _labels.length;
+    final acc = List<double>.filled(n, 0.0);
+    final single = List<double>.filled(n, 0.0);
+
+    for (final flip in [false, true]) {
+      final input = _tensor(prepared, flip);
+      _runInference(input, single);
+      var sum = 0.0;
+      var lo = 0.0, hi = 0.0;
+      for (final v in single) {
+        sum += v;
+        if (v < lo) lo = v;
+        if (v > hi) hi = v;
+      }
+      // Raw logits -> softmax; already-normalized scores pass through.
+      if (hi > 1.001 || lo < -0.001 || (sum - 1.0).abs() > 0.05) {
+        final maxV = hi;
+        var expSum = 0.0;
+        for (var i = 0; i < n; i++) {
+          single[i] = math.exp(single[i] - maxV);
+          expSum += single[i];
+        }
+        for (var i = 0; i < n; i++) {
+          single[i] /= expSum;
+        }
+      }
+      for (var i = 0; i < n; i++) {
+        acc[i] += single[i] / 2.0;
       }
     }
-    return ScanPrediction(label: _labels[bestIdx], confidence: bestVal);
+
+    final ranked = List<int>.generate(n, (i) => i)
+      ..sort((a, b) => acc[b].compareTo(acc[a]));
+    final top = ranked.take(3)
+        .map((i) => MapEntry(_labels[i], acc[i]))
+        .toList(growable: false);
+
+    return ScanPrediction(
+      label: top.first.key,
+      confidence: top.first.value,
+      top: top,
+      uncertain: top.first.value < _uncertainThreshold,
+    );
   }
 
   void close() {

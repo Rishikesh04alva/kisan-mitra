@@ -180,6 +180,14 @@ final Map<String, Map<String, String>> kStrings = {
     'perm_photos': 'Photos - to pick leaf photos from your gallery.',
     'agree_check': 'I have read and I agree to the Terms & Conditions.',
     'accept_btn': 'Agree & Start',
+    'uncertain_scan': 'Not sure - please retake',
+    'retake_hint': 'Photo not clear enough. Retake in good light with ONE leaf filling the frame.',
+    'organic_head': 'Organic control',
+    'chemical_head': 'Chemical spray (exact dose)',
+    'prevention_head': 'Prevention',
+    'dose_note': 'Doses are per litre of water unless stated. Spray in morning or evening; wear gloves and a mask.',
+    'kg_per_acre': 'kg/acre',
+    'apply_now': 'Apply now per acre:',
 
   },
   'hi': {
@@ -359,6 +367,14 @@ final Map<String, Map<String, String>> kStrings = {
     'perm_photos': 'फोटो - गैलरी से पत्ती की फोटो चुनने के लिए।',
     'agree_check': 'मैंने नियम पढ़ लिए हैं और मैं सहमत हूँ।',
     'accept_btn': 'सहमत हूँ, शुरू करें',
+    'uncertain_scan': 'निश्चित नहीं - फिर से स्कैन करें',
+    'retake_hint': 'फोटो साफ नहीं है। अच्छी रोशनी में एक पत्ती को फ्रेम में भरकर दोबारा फोटो लें।',
+    'organic_head': 'जैविक उपचार',
+    'chemical_head': 'रासायनिक छिड़काव (सही मात्रा)',
+    'prevention_head': 'बचाव',
+    'dose_note': 'मात्रा प्रति लीटर पानी है। सुबह या शाम को छिड़काव करें; दस्ताने और मास्क पहनें।',
+    'kg_per_acre': 'किलो/एकड़',
+    'apply_now': 'अभी प्रति एकड़ डालें:',
 
   },
   'mr': {
@@ -538,6 +554,14 @@ final Map<String, Map<String, String>> kStrings = {
     'perm_photos': 'फोटो - गॅलरीतून पानाचा फोटो निवडण्यासाठी.',
     'agree_check': 'मी अटी वाचल्या आहेत आणि मी सहमत आहे.',
     'accept_btn': 'सहमत, सुरू करा',
+    'uncertain_scan': 'निश्चित नाही - पुन्हा स्कॅन करा',
+    'retake_hint': 'फोटो स्पष्ट नाही. उजेडात एका पानाने फ्रेम भरून पुन्हा फोटो घ्या.',
+    'organic_head': 'सेंद्रिय उपचार',
+    'chemical_head': 'रासायनिक फवारणी (अचूक प्रमाण)',
+    'prevention_head': 'प्रतिबंध',
+    'dose_note': 'प्रमाण प्रति लिटर पाणी आहे. सकाळी किंवा संध्याकाळी फवारणी करा; हातमोजे आणि मास्क घाला.',
+    'kg_per_acre': 'किलो/एकर',
+    'apply_now': 'आता प्रति एकर टाका:',
 
   },
   'kn': {
@@ -717,6 +741,14 @@ final Map<String, Map<String, String>> kStrings = {
     'perm_photos': 'ಫೋಟೋಗಳು - ಗ್ಯಾಲರಿಯಿಂದ ಎಲೆಯ ಫೋಟೋ ಆಯ್ಕೆಗೆ.',
     'agree_check': 'ನಿಯಮಗಳನ್ನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ.',
     'accept_btn': 'ಒಪ್ಪಿಗೆ, ಪ್ರಾರಂಭಿಸಿ',
+    'uncertain_scan': 'ಖಚಿತವಿಲ್ಲ - ಮತ್ತೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
+    'retake_hint': 'ಫೋಟೋ ಸ್ಪಷ್ಟವಾಗಿಲ್ಲ. ಉತ್ತಮ ಬೆಳಕಿನಲ್ಲಿ ಒಂದು ಎಲೆಯಿಂದ ಫ್ರೇಮ್ ತುಂಬಿಸಿ ಮತ್ತೆ ಫೋಟೋ ತೆಗೆಯಿರಿ.',
+    'organic_head': 'ಸಾವಯವ ಚಿಕಿತ್ಸೆ',
+    'chemical_head': 'ರಾಸಾಯನಿಕ ಸಿಂಪರಣೆ (ನಿಖರ ಪ್ರಮಾಣ)',
+    'prevention_head': 'ತಡೆಗಟ್ಟುವಿಕೆ',
+    'dose_note': 'ಪ್ರಮಾಣ ಪ್ರತಿ ಲೀಟರ್ ನೀರಿಗೆ. ಬೆಳಿಗ್ಗೆ ಅಥವಾ ಸಂಜೆ ಸಿಂಪರಣೆ ಮಾಡಿ; ಕೈಗವಸು ಮತ್ತು ಮಾಸ್ಕ್ ಧರಿಸಿ.',
+    'kg_per_acre': 'ಕೆಜಿ/ಎಕರೆ',
+    'apply_now': 'ಈಗ ಪ್ರತಿ ಎಕರೆಗೆ ಹಾಕಿ:',
 
   },
   'ta': {
@@ -896,6 +928,14 @@ final Map<String, Map<String, String>> kStrings = {
     'perm_photos': 'புகைப்படங்கள் - கேலரியில் இருந்து இலை படம் தேர்வு.',
     'agree_check': 'விதிமுறைகளை படித்துவிட்டேன், ஒப்புக்கொள்கிறேன்.',
     'accept_btn': 'ஒப்புதல், தொடங்கு',
+    'uncertain_scan': 'உறுதியாக தெரியவில்லை - மீண்டும் ஸ்கேன் செய்யுங்கள்',
+    'retake_hint': 'புகைப்படம் தெளிவாக இல்லை. நல்ல வெளிச்சத்தில் ஒரு இலையால் பிரேமை நிரப்பி மீண்டும் எடுங்கள்.',
+    'organic_head': 'இயற்கை கட்டுப்பாடு',
+    'chemical_head': 'ரசாயன தெளிப்பு (துல்லியமான அளவு)',
+    'prevention_head': 'தடுப்பு',
+    'dose_note': 'அளவு ஒரு லிட்டர் தண்ணீருக்கு. காலை அல்லது மாலை தெளிக்கவும்; கையுறை, முகக்கவசம் அணியவும்.',
+    'kg_per_acre': 'கிலோ/ஏக்கர்',
+    'apply_now': 'இப்போது ஏக்கருக்கு இடுங்கள்:',
 
   },
   'te': {
@@ -1075,6 +1115,14 @@ final Map<String, Map<String, String>> kStrings = {
     'perm_photos': 'ఫోటోలు - గ్యాలరీ నుండి ఆకు ఫోటో ఎంచుకోవడానికి.',
     'agree_check': 'నిబంధనలు చదివాను, అంగీకరిస్తున్నాను.',
     'accept_btn': 'అంగీకరించి ప్రారంభించండి',
+    'uncertain_scan': 'ఖచ్చితంగా తెలియడంలేదు - మళ్లీ స్కాన్ చేయండి',
+    'retake_hint': 'ఫోటో స్పష్టంగా లేదు. సరైన వెలుతురులో ఒక ఆకుతో ఫ్రేమ్ నింపి మళ్లీ తీయండి.',
+    'organic_head': 'సేంద్రీయ నియంత్రణ',
+    'chemical_head': 'రసాయనిక పిచికారీ (ఖచ్చిత మోతాదు)',
+    'prevention_head': 'నివారణ',
+    'dose_note': 'మోతాదు ఒక లీటరు నీటికి. ఉదయం లేదా సాయంత్రం పిచికారీ చేయండి; చేతి గ్లౌజులు, మాస్క్ ధరించండి.',
+    'kg_per_acre': 'కిలో/ఎకరం',
+    'apply_now': 'ఇప్పుడు ఎకరానికి వేయండి:',
 
   },
   'ml': {
@@ -1254,6 +1302,14 @@ final Map<String, Map<String, String>> kStrings = {
     'perm_photos': 'ഫോട്ടോകൾ - ഗാലറിയിൽ നിന്ന് ഇല ഫോട്ടോ തിരഞ്ഞെടുക്കാൻ.',
     'agree_check': 'നിബന്ധനകൾ വായിച്ചു, ഞാൻ സമ്മതിക്കുന്നു.',
     'accept_btn': 'സമ്മതം, തുടങ്ങുക',
+    'uncertain_scan': 'ഉറപ്പില്ല - വീണ്ടും സ്കാൻ ചെയ്യുക',
+    'retake_hint': 'ഫോട്ടോ വ്യക്തമല്ല. നല്ല വെളിച്ചത്തിൽ ഒരു ഇല കൊണ്ട് ഫ്രെയിം നിറച്ച് വീണ്ടും എടുക്കുക.',
+    'organic_head': 'ജൈവ നിയന്ത്രണം',
+    'chemical_head': 'രാസ തളി (കൃത്യമായ അളവ്)',
+    'prevention_head': 'പ്രതിരോധം',
+    'dose_note': 'അളവ് ഒരു ലിറ്റർ വെള്ളത്തിനാണ്. രാവിലെയോ വൈകുന്നേരമോ തളിക്കുക; കയ്യുറ, മാസ്ക് ധരിക്കുക.',
+    'kg_per_acre': 'കിലോ/ഏക്കർ',
+    'apply_now': 'ഇപ്പോൾ ഏക്കറിന് ചേർക്കുക:',
 
   },
 };

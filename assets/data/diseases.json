@@ -1,0 +1,268 @@
+{
+  "Apple___Apple_scab": {
+    "crop": "apple", "severity": "medium",
+    "desc": "Olive-green velvety spots on leaves and fruit caused by a fungus; worse in cool wet weather.",
+    "organic": "Rake and destroy fallen leaves. Spray neem oil 5 ml/litre every 10 days.",
+    "chemical": "Spray Carbendazim 0.5 g/litre or Mancozeb 2.5 g/litre at 10-day intervals.",
+    "prevention": "Prune for airflow, avoid overhead watering, grow scab-resistant varieties."
+  },
+  "Apple___Black_rot": {
+    "crop": "apple", "severity": "high",
+    "desc": "Frogeye brown spots with purple rings on leaves; fruit rots into black mummies.",
+    "organic": "Remove mummified fruit and cankers. Spray copper fungicide 3 g/litre dormant season.",
+    "chemical": "Spray Thiophanate-methyl 1 g/litre from petal fall every 14 days.",
+    "prevention": "Sanitation of dead wood, tree vigour via balanced fertilizer, avoid bark injuries."
+  },
+  "Apple___Cedar_apple_rust": {
+    "crop": "apple", "severity": "medium",
+    "desc": "Bright orange-yellow spots on upper leaf surface; needs nearby juniper/cedar trees to spread.",
+    "organic": "Remove nearby junipers or galls. Spray sulphur-based fungicide 2 g/litre.",
+    "chemical": "Spray Propiconazole 1 ml/litre at pink bud and again 14 days later.",
+    "prevention": "Do not plant apples near cedar/juniper windbreaks."
+  },
+  "Apple___healthy": {
+    "crop": "apple", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Keep regular nutrition and irrigation schedule."
+  },
+  "Blueberry___healthy": {
+    "crop": "blueberry", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Maintain acidic soil pH 4.5-5.5 and mulching."
+  },
+  "Cherry_(including_sour)___Powdery_mildew": {
+    "crop": "cherry", "severity": "medium",
+    "desc": "White powdery coating on leaves that curls and reddens them in dry warm weather.",
+    "organic": "Spray potassium bicarbonate 5 g/litre weekly. Improve air circulation.",
+    "chemical": "Spray Hexaconazole 1 ml/litre or wettable Sulphur 2 g/litre.",
+    "prevention": "Avoid excess nitrogen; prune open canopy."
+  },
+  "Cherry_(including_sour)___healthy": {
+    "crop": "cherry", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Keep orchard floor clean and well drained."
+  },
+  "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+    "crop": "maize", "severity": "high",
+    "desc": "Long rectangular grey-brown lesions bounded by veins; spreads fast in humid warm weather and cuts yield badly.",
+    "organic": "Bury previous crop residue; rotate with legumes. Spray neem oil 5 ml/litre early.",
+    "chemical": "Spray Azoxystrobin 1 ml/litre or Propiconazole 1 ml/litre at first lesions.",
+    "prevention": "Use resistant hybrids, 2-3 year rotation, balanced potash."
+  },
+  "Corn_(maize)___Common_rust_": {
+    "crop": "maize", "severity": "medium",
+    "desc": "Small brick-red to cinnamon-brown pustules scattered on both leaf surfaces.",
+    "organic": "Spray garlic+chilli extract or neem oil 5 ml/litre on new pustules.",
+    "chemical": "Spray Mancozeb 2.5 g/litre or Oxycarboxin 1.5 ml/litre every 10 days.",
+    "prevention": "Plant rust-tolerant hybrids early in the season."
+  },
+  "Corn_(maize)___Northern_Leaf_Blight": {
+    "crop": "maize", "severity": "high",
+    "desc": "Large cigar-shaped grey-green lesions up to 15 cm long that merge and kill leaves.",
+    "organic": "Rotate crops, plough under stubble, apply well-decomposed FYM.",
+    "chemical": "Spray Mancozeb 2.5 g/litre at lesion appearance, repeat after 12 days.",
+    "prevention": "Resistant hybrids and residue management before monsoon."
+  },
+  "Corn_(maize)___healthy": {
+    "crop": "maize", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Top-dress urea at knee-high and tasseling stages."
+  },
+  "Grape___Black_rot": {
+    "crop": "grape", "severity": "high",
+    "desc": "Tan spots with black pimple dots on leaves; berries shrivel into hard black mummies.",
+    "organic": "Remove and burn all mummies and infected shoots. Prune for sunlight.",
+    "chemical": "Spray Mancozeb 2.5 g/litre from pre-bloom every 10-14 days.",
+    "prevention": "Erbigade vineyard sanitation is critical before budbreak."
+  },
+  "Grape___Esca_(Black_Measles)": {
+    "crop": "grape", "severity": "high",
+    "desc": "Tiger-stripes of yellow-red between green veins on leaves; berries get purple spots and shrivel.",
+    "organic": "Avoid large pruning wounds; seal cuts with pruning paste. Remove dead arms.",
+    "chemical": "Drench Carbendazim 1 g/litre near trunk after pruning.",
+    "prevention": "Protect vines from drought stress; avoid late-winter pruning."
+  },
+  "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+    "crop": "grape", "severity": "medium",
+    "desc": "Irregular dark brown-black spots that dry the leaf quickly during monsoon humidity.",
+    "organic": "Remove infected leaves; keep canopy open; spray neem oil 5 ml/litre.",
+    "chemical": "Spray Chlorothalonil 2 g/litre or Mancozeb 2.5 g/litre every 12 days.",
+    "prevention": "Rain shelter or timely monsoon sprays in humid regions."
+  },
+  "Grape___healthy": {
+    "crop": "grape", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Maintain pruning calendar and soil test based fertilizer."
+  },
+  "Orange___Haunglongbing_(Citrus_greening)": {
+    "crop": "citrus", "severity": "high",
+    "desc": "Blotchy yellow mottling on leaves, small bitter fruits, twig dieback. Spread by psylla insect - serious.",
+    "organic": "Control psylla with neem oil 8 ml/litre sprays; remove infected trees entirely.",
+    "chemical": "Spray Imidacloprid 0.5 ml/litre against psylla vector; no cure for infection itself.",
+    "prevention": "Buy certified disease-free saplings; monitor psylla from flush growth."
+  },
+  "Peach___Bacterial_spot": {
+    "crop": "peach", "severity": "medium",
+    "desc": "Small water-soaked angular spots that turn purple-black and drop out leaving holes.",
+    "organic": "Copper oxychloride 3 g/litre at leaf fall and bud swell; avoid excess nitrogen.",
+    "chemical": "Spray Streptocycline 0.5 g/100 litre + Copper oxychloride 3 g/litre.",
+    "prevention": "Choose resistant varieties; avoid overhead irrigation."
+  },
+  "Peach___healthy": {
+    "crop": "peach", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Winter sanitation and balanced NPK."
+  },
+  "Pepper,_bell___Bacterial_spot": {
+    "crop": "pepper", "severity": "high",
+    "desc": "Small dark greasy angular spots on leaves and fruits in warm rainy weather; defoliation follows.",
+    "organic": "Spray copper oxychloride 3 g/litre weekly; use composted nursery mix.",
+    "chemical": "Spray Streptocycline 0.5 g/100 litre + Copper oxychloride 2.5 g/litre at 7-day gap x2.",
+    "prevention": "Certified seed, 3-year rotation, drip irrigation instead of flood."
+  },
+  "Pepper,_bell___healthy": {
+    "crop": "pepper", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Mulch and steady moisture keep peppers productive."
+  },
+  "Potato___Early_blight": {
+    "crop": "potato", "severity": "medium",
+    "desc": "Brown spots with clear target-ring pattern on older leaves first; spreads upward.",
+    "organic": "Spray neem oil 5 ml/litre; remove lower infected leaves; add potash.",
+    "chemical": "Spray Chlorothalonil 2 g/litre or Mancozeb 2.5 g/litre every 10 days.",
+    "prevention": "Healthy seed tubers, wider spacing, adequate potash."
+  },
+  "Potato___Late_blight": {
+    "crop": "potato", "severity": "high",
+    "desc": "Water-soaked black patches with white fungal ring under leaves in cool cloudy weather; can destroy crop in days.",
+    "organic": "Destroy infected plants immediately; improve drainage; no evening irrigation.",
+    "chemical": "Spray Cymoxanil+Mancozeb 3 g/litre or Metalaxyl+Mancozeb 2.5 g/litre immediately, repeat 7 days.",
+    "prevention": "Start protective sprays when night temp 10-20 C with fog/dew forecast."
+  },
+  "Potato___healthy": {
+    "crop": "potato", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Earth-up ridges and monitor weather for blight alerts."
+  },
+  "Raspberry___healthy": {
+    "crop": "raspberry", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Thin canes yearly for airflow."
+  },
+  "Soybean___healthy": {
+    "crop": "soybean", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Seed treatment with Rhizobium keeps nodulation strong."
+  },
+  "Squash___Powdery_mildew": {
+    "crop": "squash", "severity": "medium",
+    "desc": "White talc-like powder spreading over leaves; yellows and dries them early.",
+    "organic": "Spray milk solution 1:9 with water weekly, or potassium bicarbonate 5 g/litre.",
+    "chemical": "Spray Hexaconazole 1 ml/litre or Sulphur WDG 2 g/litre.",
+    "prevention": "Full sun exposure, wide spacing, avoid wetting leaves at dusk."
+  },
+  "Strawberry___Leaf_scorch": {
+    "crop": "strawberry", "severity": "medium",
+    "desc": "Purple irregular spots that merge; leaf edges scorch dry and curl up.",
+    "organic": "Remove oldest spotted leaves; mulch to stop splash; neem oil 5 ml/litre.",
+    "chemical": "Spray Captan 2 g/litre or Hexaconazole 1 ml/litre every 10 days.",
+    "prevention": "Avoid overhead watering; renew beds every 2-3 years."
+  },
+  "Strawberry___healthy": {
+    "crop": "strawberry", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Keep bed mulched and irrigate mornings only."
+  },
+  "Tomato___Bacterial_spot": {
+    "crop": "tomato", "severity": "high",
+    "desc": "Tiny dark greasy spots with yellow halos on leaves and fruits; spreads by rain splash.",
+    "organic": "Copper oxychloride 3 g/litre + neem oil 3 ml/litre weekly; sanitize stakes.",
+    "chemical": "Spray Streptocycline 0.5 g/100 litre + Copper oxychloride 2.5 g/litre twice, 7 days apart.",
+    "prevention": "Treat seed with hot water, 3-year rotation, drip irrigation."
+  },
+  "Tomato___Early_blight": {
+    "crop": "tomato", "severity": "medium",
+    "desc": "Brown bullseye target spots on older leaves; concentric rings clearly visible.",
+    "organic": "Mulch to block soil splash; remove infected leaves; potash top-up; neem oil 5 ml/litre.",
+    "chemical": "Spray Mancozeb 2.5 g/litre or Chlorothalonil 2 g/litre every 10 days.",
+    "prevention": "Stake plants for airflow, avoid evening watering, rotate solanaceous crops."
+  },
+  "Tomato___Late_blight": {
+    "crop": "tomato", "severity": "high",
+    "desc": "Greasy black-green blotches with white mold under leaves in cool humid spells; very fast killer.",
+    "organic": "Uproot and destroy infected plants at once; ensure drainage; no night irrigation.",
+    "chemical": "Spray Cymoxanil+Mancozeb 3 g/litre at once, then Metalaxyl+Mancozeb 2.5 g/litre after 7 days.",
+    "prevention": "Protective Mancozeb spray before humid cloudy spells; resistant varieties."
+  },
+  "Tomato___Leaf_Mold": {
+    "crop": "tomato", "severity": "medium",
+    "desc": "Pale yellow upper spots with olive-grey fuzzy mold underneath - common in polyhouses/humid air.",
+    "organic": "Ventilate polyhouse to cut humidity below 85%; thin foliage; sulfur burner.",
+    "chemical": "Spray Chlorothalonil 2 g/litre or Fosetyl-Al 2.5 g/litre focusing leaf undersides.",
+    "prevention": "Wide plant spacing, morning-only irrigation, remove crop debris."
+  },
+  "Tomato___Septoria_leaf_spot": {
+    "crop": "tomato", "severity": "medium",
+    "desc": "Many small round spots with grey centres and dark edges starting on lower leaves after fruit set.",
+    "organic": "Remove infected lower leaves; mulch; spray copper soap or neem oil 5 ml/litre.",
+    "chemical": "Spray Mancozeb 2.5 g/litre every 8-10 days from first spot.",
+    "prevention": "Never work plants when wet; stake and prune for airflow."
+  },
+  "Tomato___Spider_mites Two-spotted_spider_mite": {
+    "crop": "tomato", "severity": "medium",
+    "desc": "Fine yellow speckling and bronzing; tiny red mites and webbing under leaves in hot dry weather.",
+    "organic": "Spray water jet undersides daily; release Phytoseiulus persimilis; neem oil 5 ml/litre 3x.",
+    "chemical": "Spray Fenazaquin 1 ml/litre or Propargite 2 ml/litre, alternate chemicals to avoid resistance.",
+    "prevention": "Raise humidity around crop, avoid dust roadsides, inspect undersides weekly."
+  },
+  "Tomato___Target_Spot": {
+    "crop": "tomato", "severity": "medium",
+    "desc": "Concentric-ring brown lesions like early blight but also on fruits causing deep sunken spots.",
+    "organic": "Prune lower leaves; mulch; avoid dense canopy; neem oil 5 ml/litre.",
+    "chemical": "Spray Difenoconazole 0.5 ml/litre or Chlorothalonil 2 g/litre every 10 days.",
+    "prevention": "Ventilated spacing, drip irrigation, remove volunteer solanaceous weeds."
+  },
+  "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+    "crop": "tomato", "severity": "high",
+    "desc": "Leaves curl upward, turn yellow at edges, plant stunts badly. Whitefly-spread virus - no cure.",
+    "organic": "Remove infected plants immediately; yellow sticky traps 25/acre; net nurseries; neem oil 5 ml/litre vs whitefly.",
+    "chemical": "Control vector: Spray Imidacloprid 0.3 ml/litre or Diafenthiuron 1 g/litre weekly rotation.",
+    "prevention": "Grow TYLCV-resistant hybrids; keep nursery insect-proof; manage weeds hosting whitefly."
+  },
+  "Tomato___Tomato_mosaic_virus": {
+    "crop": "tomato", "severity": "high",
+    "desc": "Mottled light-dark green mosaic pattern, fern-leaf distortion; spreads by hands and tools - no cure.",
+    "organic": "Uproot infected plants; dip tools in 10% bleach between plants; wash hands with soap.",
+    "chemical": "No chemical cure - control by sanitation; manage aphids with Imidacloprid 0.3 ml/litre.",
+    "prevention": "Buy certified seed (virus-tested), avoid tobacco handling near crop, disinfect trays."
+  },
+  "Tomato___healthy": {
+    "crop": "tomato", "severity": "low",
+    "desc": "Leaf looks normal - no disease detected.",
+    "organic": "No action needed.",
+    "chemical": "No spray needed.",
+    "prevention": "Weekly underside checks catch problems earliest."
+  }
+}

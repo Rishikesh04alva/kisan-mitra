@@ -6,10 +6,38 @@
     "waterIntervalDays": 3,
     "harvestDays": 120,
     "stages": [
-      {"from": 0, "to": 7, "label": "fx_basal"},
-      {"from": 20, "to": 40, "label": "fx_vegetative"},
-      {"from": 60, "to": 75, "label": "fx_flowering"},
-      {"from": 85, "to": 105, "label": "fx_grain_fill"}
+      {
+        "from": 0,
+        "to": 7,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 20,
+          "dap": 50,
+          "mop": 40
+        }
+      },
+      {
+        "from": 20,
+        "to": 40,
+        "label": "fx_vegetative",
+        "fert": {
+          "urea": 27
+        }
+      },
+      {
+        "from": 60,
+        "to": 75,
+        "label": "fx_flowering",
+        "fert": {
+          "urea": 26
+        }
+      },
+      {
+        "from": 85,
+        "to": 105,
+        "label": "fx_grain_fill",
+        "fert": {}
+      }
     ]
   },
   {
@@ -19,10 +47,36 @@
     "waterIntervalDays": 7,
     "harvestDays": 120,
     "stages": [
-      {"from": 0, "to": 7, "label": "fx_basal"},
-      {"from": 21, "to": 30, "label": "fx_vegetative"},
-      {"from": 55, "to": 65, "label": "fx_flowering"},
-      {"from": 75, "to": 95, "label": "fx_grain_fill"}
+      {
+        "from": 0,
+        "to": 7,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 52,
+          "dap": 52,
+          "mop": 20
+        }
+      },
+      {
+        "from": 21,
+        "to": 30,
+        "label": "fx_vegetative",
+        "fert": {
+          "urea": 53
+        }
+      },
+      {
+        "from": 55,
+        "to": 65,
+        "label": "fx_flowering",
+        "fert": {}
+      },
+      {
+        "from": 75,
+        "to": 95,
+        "label": "fx_grain_fill",
+        "fert": {}
+      }
     ]
   },
   {
@@ -32,10 +86,38 @@
     "waterIntervalDays": 7,
     "harvestDays": 160,
     "stages": [
-      {"from": 0, "to": 10, "label": "fx_basal"},
-      {"from": 30, "to": 60, "label": "fx_vegetative"},
-      {"from": 70, "to": 100, "label": "fx_flowering"},
-      {"from": 110, "to": 140, "label": "fx_grain_fill"}
+      {
+        "from": 0,
+        "to": 10,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 22,
+          "dap": 43,
+          "mop": 33
+        }
+      },
+      {
+        "from": 30,
+        "to": 60,
+        "label": "fx_vegetative",
+        "fert": {
+          "urea": 32
+        }
+      },
+      {
+        "from": 70,
+        "to": 100,
+        "label": "fx_flowering",
+        "fert": {
+          "urea": 33
+        }
+      },
+      {
+        "from": 110,
+        "to": 140,
+        "label": "fx_grain_fill",
+        "fert": {}
+      }
     ]
   },
   {
@@ -45,10 +127,38 @@
     "waterIntervalDays": 5,
     "harvestDays": 300,
     "stages": [
-      {"from": 0, "to": 15, "label": "fx_basal"},
-      {"from": 45, "to": 90, "label": "fx_vegetative"},
-      {"from": 150, "to": 200, "label": "fx_flowering"},
-      {"from": 220, "to": 270, "label": "fx_grain_fill"}
+      {
+        "from": 0,
+        "to": 15,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 45,
+          "dap": 65,
+          "mop": 50
+        }
+      },
+      {
+        "from": 45,
+        "to": 90,
+        "label": "fx_vegetative",
+        "fert": {
+          "urea": 75
+        }
+      },
+      {
+        "from": 150,
+        "to": 200,
+        "label": "fx_flowering",
+        "fert": {
+          "urea": 75
+        }
+      },
+      {
+        "from": 220,
+        "to": 270,
+        "label": "fx_grain_fill",
+        "fert": {}
+      }
     ]
   },
   {
@@ -58,9 +168,32 @@
     "waterIntervalDays": 2,
     "harvestDays": 90,
     "stages": [
-      {"from": 0, "to": 5, "label": "fx_basal"},
-      {"from": 20, "to": 35, "label": "fx_vegetative"},
-      {"from": 40, "to": 60, "label": "fx_flowering"}
+      {
+        "from": 0,
+        "to": 5,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 22,
+          "dap": 65,
+          "mop": 50
+        }
+      },
+      {
+        "from": 20,
+        "to": 35,
+        "label": "fx_vegetative",
+        "fert": {
+          "urea": 30
+        }
+      },
+      {
+        "from": 40,
+        "to": 60,
+        "label": "fx_flowering",
+        "fert": {
+          "urea": 35
+        }
+      }
     ]
   },
   {
@@ -70,9 +203,32 @@
     "waterIntervalDays": 4,
     "harvestDays": 110,
     "stages": [
-      {"from": 0, "to": 7, "label": "fx_basal"},
-      {"from": 25, "to": 45, "label": "fx_vegetative"},
-      {"from": 60, "to": 80, "label": "fx_grain_fill"}
+      {
+        "from": 0,
+        "to": 7,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 22,
+          "dap": 39,
+          "mop": 25
+        }
+      },
+      {
+        "from": 25,
+        "to": 45,
+        "label": "fx_vegetative",
+        "fert": {
+          "urea": 30
+        }
+      },
+      {
+        "from": 60,
+        "to": 80,
+        "label": "fx_grain_fill",
+        "fert": {
+          "urea": 24
+        }
+      }
     ]
   },
   {
@@ -82,9 +238,28 @@
     "waterIntervalDays": 6,
     "harvestDays": 95,
     "stages": [
-      {"from": 0, "to": 7, "label": "fx_basal"},
-      {"from": 25, "to": 40, "label": "fx_vegetative"},
-      {"from": 50, "to": 70, "label": "fx_flowering"}
+      {
+        "from": 0,
+        "to": 7,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 13,
+          "dap": 70,
+          "mop": 20
+        }
+      },
+      {
+        "from": 25,
+        "to": 40,
+        "label": "fx_vegetative",
+        "fert": {}
+      },
+      {
+        "from": 50,
+        "to": 70,
+        "label": "fx_flowering",
+        "fert": {}
+      }
     ]
   },
   {
@@ -94,10 +269,38 @@
     "waterIntervalDays": 4,
     "harvestDays": 100,
     "stages": [
-      {"from": 0, "to": 7, "label": "fx_basal"},
-      {"from": 25, "to": 45, "label": "fx_vegetative"},
-      {"from": 55, "to": 75, "label": "fx_flowering"},
-      {"from": 80, "to": 95, "label": "fx_grain_fill"}
+      {
+        "from": 0,
+        "to": 7,
+        "label": "fx_basal",
+        "fert": {
+          "urea": 30,
+          "dap": 70,
+          "mop": 33
+        }
+      },
+      {
+        "from": 25,
+        "to": 45,
+        "label": "fx_vegetative",
+        "fert": {
+          "urea": 60
+        }
+      },
+      {
+        "from": 55,
+        "to": 75,
+        "label": "fx_flowering",
+        "fert": {
+          "urea": 60
+        }
+      },
+      {
+        "from": 80,
+        "to": 95,
+        "label": "fx_grain_fill",
+        "fert": {}
+      }
     ]
   }
 ]

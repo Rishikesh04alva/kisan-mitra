@@ -101,37 +101,101 @@ class _TrackerScreenState extends State<TrackerScreen> {
         final stage = r.fertDue!;
         final window =
             '${stage.fromDay}–${stage.toDay} ${s.t('days')}';
+        final fert = <Widget>[];
+        stage.fert.forEach((nutrient, kg) {
+          if (kg <= 0) return;
+          final emoji = nutrient == 'urea'
+              ? '⚪️'
+              : nutrient == 'dap'
+                  ? '🟤'
+                  : '🟥';
+          fert.add(Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Row(
+              children: [
+                Text(emoji, style: const TextStyle(fontSize: 16)),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    '${_nutName(nutrient)}  ${_fmt(kg)} ${s.t('kg_per_acre')}',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w800),
+                  ),
+                ),
+              ],
+            ),
+          ));
+        });
         return Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: NeoCard(
             color: AppColors.yellow,
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(crop?.icon ?? '🌾',
-                    style: const TextStyle(fontSize: 30)),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        crop == null ? '' : crop.localName(context),
-                        style: Theme.of(context).textTheme.titleMedium,
+                Row(
+                  children: [
+                    Text(crop?.icon ?? '🌾',
+                        style: const TextStyle(fontSize: 30)),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            crop == null ? '' : crop.localName(context),
+                            style:
+                                Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            '${s.t(stage.labelKey)} • $window',
+                            style:
+                                Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '${s.t(stage.labelKey)} • $window',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                if (fert.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          s.t('apply_now'),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w900),
+                        ),
+                        ...fert,
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
         );
       }),
     ];
+  }
+
+  String _fmt(double kg) => kg % 1 == 0 ? kg.toStringAsFixed(0) : kg.toStringAsFixed(1);
+
+  String _nutName(String n) {
+    switch (n) {
+      case 'urea':
+        return 'Urea (46-0-0)';
+      case 'dap':
+        return 'DAP (18-46-0)';
+      case 'mop':
+        return 'MOP (0-0-60)';
+      default:
+        return n;
+    }
   }
 }
 

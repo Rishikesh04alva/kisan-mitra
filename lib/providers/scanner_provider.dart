@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 import '../core/db/app_database.dart';
 import '../data/models/models.dart';
 import '../services/tflite_service.dart';
+import 'dart:convert';
 
 enum ScanState { idle, analyzing, done, error }
 
@@ -14,19 +16,27 @@ class ScannerProvider extends ChangeNotifier {
 
   ScanState state = ScanState.idle;
   ScanRecord? lastResult;
+  ScanPrediction? lastPrediction;
   bool lastWasDemo = false;
   String errorKey = 'err_generic';
   List<ScanRecord> history = [];
+  Map<String, DiseaseInfo> kb = {};
 
   ScannerProvider(this.db, this.tflite);
 
   Future<void> init() async {
     history = await db.getScans(limit: 10);
+    try {
+      final raw = await rootBundle.loadString('assets/data/diseases.json');
+      final map = jsonDecode(raw) as Map<String, dynamic>;
+      kb = map.map((k, v) => MapEntry(k, DiseaseInfo.fromJson(k, v)));
+    } catch (_) {
+      kb = {};
+    }
     notifyListeners();
   }
 
-  bool get isHealthy =>
-      lastResult?.healthy ?? false;
+  bool get isHealthy => lastResult?.healthy ?? false;
 
   Future<void> analyze(String imagePath, Uint8List bytes) async {
     state = ScanState.analyzing;
@@ -42,6 +52,7 @@ class ScannerProvider extends ChangeNotifier {
       );
       await db.addScan(record);
       lastResult = record;
+      lastPrediction = prediction;
       lastWasDemo = prediction.demo;
       state = ScanState.done;
     } catch (e) {
@@ -56,6 +67,7 @@ class ScannerProvider extends ChangeNotifier {
   void reset() {
     state = ScanState.idle;
     lastResult = null;
+    lastPrediction = null;
     errorKey = 'err_generic';
     notifyListeners();
   }

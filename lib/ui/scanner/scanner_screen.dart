@@ -8,6 +8,7 @@ import '../../core/l10n.dart';
 import '../../core/theme.dart';
 import '../../data/models/models.dart';
 import '../../providers/scanner_provider.dart';
+import '../../services/tflite_service.dart';
 import '../widgets/common.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -115,7 +116,12 @@ class _ScannerScreenState extends State<ScannerScreen> {
             ),
           ],
           if (scanner.state == ScanState.done && scanner.lastResult != null)
-            _ResultCard(record: scanner.lastResult!, demo: scanner.lastWasDemo),
+            _ResultCard(
+              record: scanner.lastResult!,
+              demo: scanner.lastWasDemo,
+              prediction: scanner.lastPrediction,
+              kb: scanner.kb,
+            ),
           if (scanner.state == ScanState.error)
             NeoCard(
               color: AppColors.red,
@@ -147,21 +153,36 @@ String _prettyLabel(String raw) {
 class _ResultCard extends StatelessWidget {
   final ScanRecord record;
   final bool demo;
+  final ScanPrediction? prediction;
+  final Map<String, DiseaseInfo> kb;
 
-  const _ResultCard({required this.record, required this.demo});
+  const _ResultCard({
+    required this.record,
+    required this.demo,
+    this.prediction,
+    this.kb = const {},
+  });
 
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
     final healthy = record.healthy;
+    final uncertain = prediction?.uncertain ?? false;
+    final info = kb[record.label];
+    final Color bg = healthy
+        ? AppColors.green
+        : uncertain
+            ? AppColors.yellow
+            : AppColors.red;
+
     return NeoCard(
-      color: healthy ? AppColors.green : AppColors.red,
+      color: bg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Text(healthy ? '😊' : '⚠️',
+              Text(healthy ? '😊' : (uncertain ? '🤔' : '⚠️'),
                   style: const TextStyle(fontSize: 40)),
               const SizedBox(width: 12),
               Expanded(
@@ -169,33 +190,64 @@ class _ResultCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      healthy ? s.t('healthy_msg') : s.t('disease_detected'),
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white),
+                      healthy
+                          ? s.t('healthy_msg')
+                          : uncertain
+                              ? s.t('uncertain_scan')
+                              : s.t('disease_detected'),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: Colors.white),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       _prettyLabel(record.label),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(color: Colors.white, fontWeight: FontWeight.w800),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
               ),
             ],
           ),
+          if (!healthy && !uncertain) ...[
+            const SizedBox(height: 8),
+            Text(
+              info?.desc ?? '',
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+          ],
+          if (uncertain) ...[
+            const SizedBox(height: 8),
+            Text(s.t('retake_hint'),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: AppColors.ink, fontWeight: FontWeight.w700)),
+          ],
           const SizedBox(height: 10),
           Text(
             '${s.t('confidence')}: ${(record.confidence * 100).toStringAsFixed(0)}%',
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
-                .copyWith(color: Colors.white),
+                .copyWith(color: healthy || !uncertain ? Colors.white : AppColors.ink),
           ),
           const SizedBox(height: 6),
           ConfidenceBar(value: record.confidence),
-          if (!healthy) ...[
+          if (!healthy && !uncertain && (prediction?.top.length ?? 0) > 1) ...[
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: prediction!.top.skip(1).map((e) => NeoBadge(
+                    text:
+                        '${_prettyLabel(e.key)} ${(e.value * 100).round()}%',
+                    color: Colors.white,
+                  )).toList(),
+            ),
+          ],
+          if (!healthy && !uncertain) ...[
             const SizedBox(height: 14),
             NeoCard(
               color: Colors.white,
@@ -211,10 +263,26 @@ class _ResultCard extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 10),
+                  _TxRow(
+                      emoji: '🌿',
+                      title: s.t('organic_head'),
+                      body: info?.organic ?? s.t(record.txKey)),
+                  const SizedBox(height: 10),
+                  _TxRow(
+                      emoji: '🧪',
+                      title: s.t('chemical_head'),
+                      body: info?.chemical ?? ''),
+                  const SizedBox(height: 10),
+                  _TxRow(
+                      emoji: '🛡️',
+                      title: s.t('prevention_head'),
+                      body: info?.prevention ?? ''),
+                  const SizedBox(height: 8),
                   Text(
-                    s.t(record.txKey),
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    s.t('dose_note'),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.black54, fontStyle: FontStyle.italic),
                   ),
                 ],
               ),
@@ -227,6 +295,40 @@ class _ResultCard extends StatelessWidget {
           const SizedBox(height: 12),
         ],
       ),
+    );
+  }
+}
+
+class _TxRow extends StatelessWidget {
+  final String emoji;
+  final String title;
+  final String body;
+
+  const _TxRow({required this.emoji, required this.title, required this.body});
+
+  @override
+  Widget build(BuildContext context) {
+    if (body.trim().isEmpty) return const SizedBox.shrink();
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(emoji, style: const TextStyle(fontSize: 18)),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w900)),
+              const SizedBox(height: 2),
+              Text(body, style: Theme.of(context).textTheme.bodyMedium),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

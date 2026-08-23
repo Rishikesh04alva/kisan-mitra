@@ -16,13 +16,21 @@ class FertStage {
   final int fromDay;
   final int toDay;
   final String labelKey;
+  final Map<String, double> fert;
 
-  const FertStage({required this.fromDay, required this.toDay, required this.labelKey});
+  const FertStage({
+    required this.fromDay,
+    required this.toDay,
+    required this.labelKey,
+    this.fert = const {},
+  });
 
   factory FertStage.fromJson(Map<String, dynamic> j) => FertStage(
         fromDay: j['from'] as int,
         toDay: j['to'] as int,
         labelKey: j['label'] as String,
+        fert: ((j['fert'] ?? const {}) as Map<String, dynamic>)
+            .map((k, v) => MapEntry(k, (v as num).toDouble())),
       );
 }
 
@@ -57,6 +65,37 @@ class Crop {
   String localName(BuildContext context) {
     return S.of(context).t(nameKey);
   }
+}
+
+class DiseaseInfo {
+  final String label;
+  final String crop;
+  final String severity;
+  final String desc;
+  final String organic;
+  final String chemical;
+  final String prevention;
+
+  const DiseaseInfo({
+    required this.label,
+    required this.crop,
+    required this.severity,
+    required this.desc,
+    required this.organic,
+    required this.chemical,
+    required this.prevention,
+  });
+
+  factory DiseaseInfo.fromJson(String label, Map<String, dynamic> j) =>
+      DiseaseInfo(
+        label: label,
+        crop: j['crop'] as String? ?? '',
+        severity: j['severity'] as String? ?? 'medium',
+        desc: j['desc'] as String? ?? '',
+        organic: j['organic'] as String? ?? '',
+        chemical: j['chemical'] as String? ?? '',
+        prevention: j['prevention'] as String? ?? '',
+      );
 }
 
 class FieldPlot {
