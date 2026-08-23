@@ -317,4 +317,10 @@ class AppDatabase {
         .query('settings', where: 'key = ?', whereArgs: [key], limit: 1);
     return rows.isEmpty ? null : rows.first['value'] as String?;
   }
+
+  Future<void> saveSetting(String key, String value) => database.insert(
+        'settings',
+        {'key': key, 'value': value},
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
 }

@@ -51,7 +51,9 @@ jobs:
       - name: Build release APKs split by ABI
         run: |
           set -o pipefail
-          flutter build apk --release --split-per-abi 2>&1 | tee /tmp/build.log
+          flutter build apk --release --split-per-abi \
+            --dart-define=OPENROUTER_KEY=${{ secrets.OPENROUTER_API_KEY }} \
+            2>&1 | tee /tmp/build.log
 
       - name: Publish error tail back to repo
         if: failure()

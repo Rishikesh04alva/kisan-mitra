@@ -11,9 +11,9 @@ typedef Tr = String Function(String key, [Map<String, String>? params]);
 class AssistantProvider extends ChangeNotifier {
   final AppDatabase db;
   final IntentEngine engine;
-  final GeminiService ai = GeminiService();
+  final AiService ai = AiService();
 
-  static const _kAiKeySetting = 'gemini_api_key';
+  static const _kAiKeySetting = 'omni_api_key';
 
   final List<ChatMsg> messages = [];
   bool listening = false;
@@ -26,7 +26,10 @@ class AssistantProvider extends ChangeNotifier {
 
   AssistantProvider(this.db, this.engine);
 
-  bool get aiReady => _aiKey != null && _aiKey!.isNotEmpty;
+  bool get aiReady => effectiveKey.isNotEmpty;
+
+  String get effectiveKey =>
+      (_aiKey == null || _aiKey!.isEmpty) ? AiService.defaultApiKey : _aiKey!;
 
   Future<void> loadAiKey() async {
     try {
@@ -96,7 +99,7 @@ class AssistantProvider extends ChangeNotifier {
   Future<String> _askAi(String question, String langCode) async {
     final ctx = await _buildContext();
     return ai.ask(
-      apiKey: _aiKey!,
+      apiKey: effectiveKey,
       question: question,
       langCode: langCode,
       context: ctx,
