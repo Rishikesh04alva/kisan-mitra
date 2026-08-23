@@ -15,7 +15,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install TensorFlow
-        run: pip install tensorflow-cpu==2.16.2 numpy pillow
+        run: pip install tensorflow-cpu==2.15.1 numpy pillow
 
       - name: Download PlantVillage dataset
         run: |
