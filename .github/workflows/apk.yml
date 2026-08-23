@@ -32,6 +32,16 @@ jobs:
           M=android/app/src/main/AndroidManifest.xml
           sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO"/>\n    <uses-permission android:name="android.permission.INTERNET"/>\n</manifest>#' "$M"
 
+      - name: Configure ProGuard rules for TFLite
+        run: |
+          cat > android/app/proguard-rules.pro <<'EOF'
+          -keep class org.tensorflow.lite.** { *; }
+          -dontwarn org.tensorflow.lite.gpu.**
+          -dontwarn org.tensorflow.lite.gpu.experimental.**
+          EOF
+          G=android/app/build.gradle
+          grep -q "proguard-rules.pro" "$G" || sed -i 's#signingConfig = signingConfigs.debug#signingConfig = signingConfigs.debug\n            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"#' "$G"
+
       - run: flutter pub get
 
       - name: Static analysis (non-blocking)
