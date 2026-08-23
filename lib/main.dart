@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:workmanager/workmanager.dart';
@@ -31,7 +32,17 @@ Future<void> main() async {
     );
   } catch (_) {}
 
-  runApp(KisanMitraApp(db: db, tflite: tflite));
+  bool firebaseReady = false;
+  try {
+    await Firebase.initializeApp();
+    firebaseReady = true;
+  } catch (_) {}
+
+  runApp(KisanMitraApp(
+    db: db,
+    tflite: tflite,
+    firebaseReady: firebaseReady,
+  ));
 }
 
 Future<void> _seed(AppDatabase db) async {

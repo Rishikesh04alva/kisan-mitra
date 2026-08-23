@@ -15,13 +15,20 @@ import 'providers/scanner_provider.dart';
 import 'providers/tracker_provider.dart';
 import 'services/intent_engine.dart';
 import 'services/tflite_service.dart';
+import 'ui/auth/auth_gate.dart';
 import 'ui/home_shell.dart';
 
 class KisanMitraApp extends StatelessWidget {
   final AppDatabase db;
   final TfliteService tflite;
+  final bool firebaseReady;
 
-  const KisanMitraApp({super.key, required this.db, required this.tflite});
+  const KisanMitraApp({
+    super.key,
+    required this.db,
+    required this.tflite,
+    required this.firebaseReady,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +74,7 @@ class KisanMitraApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: const HomeShell(),
+          home: firebaseReady ? const AuthGate() : const HomeShell(),
           builder: (ctx, child) => S(code: lp.code, child: child!),
         ),
       ),

@@ -27,10 +27,32 @@ jobs:
       - name: Generate Android platform scaffold
         run: flutter create . --platforms android --project-name kisan_mitra
 
+      - name: Pin stable debug keystore (constant SHA-1 for Firebase)
+        run: |
+          mkdir -p ~/.android
+          [ -f ci/debug.keystore ] && cp ci/debug.keystore ~/.android/debug.keystore || true
+
       - name: Inject runtime permissions into manifest
         run: |
           M=android/app/src/main/AndroidManifest.xml
-          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO"/>\n    <uses-permission android:name="android.permission.INTERNET"/>\n</manifest>#' "$M"
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO"/>\n    <uses-permission android:name="android.permission.CAMERA"/>\n    <uses-permission android:name="android.permission.INTERNET"/>\n</manifest>#' "$M"
+
+      - name: Bump minSdk to 23 (Firebase Auth requirement)
+        run: |
+          G=android/app/build.gradle
+          sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 23/' "$G"
+          sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 23/' "$G"
+
+      - name: Wire Firebase google-services (if config provided)
+        if: ${{ secrets.GOOGLE_SERVICES_JSON != '' }}
+        env:
+          GS_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo "$GS_JSON" | base64 -d > android/app/google-services.json
+          S=android/settings.gradle
+          grep -q "google-services" "$S" || sed -i 's#id "org.jetbrains.kotlin.android" version "\(.*\)" apply false#id "org.jetbrains.kotlin.android" version "\1" apply false\n    id "com.google.gms.google-services" version "4.4.2" apply false#' "$S"
+          A=android/app/build.gradle
+          grep -q "com.google.gms.google-services" "$A" || sed -i 's#id "dev.flutter.flutter-gradle-plugin"#id "dev.flutter.flutter-gradle-plugin"\n    id "com.google.gms.google-services"#' "$A"
 
       - name: Configure ProGuard rules for TFLite
         run: |
