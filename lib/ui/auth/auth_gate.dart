@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,8 +5,9 @@ import '../../core/db/app_database.dart';
 import '../../core/theme.dart';
 import '../home_shell.dart';
 import 'consent_screen.dart';
-import 'login_screen.dart';
 
+/// No account required: goes straight to the one-time consent screen,
+/// then straight into the app. Login/OTP removed.
 class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
 
@@ -17,37 +17,30 @@ class AuthGate extends StatefulWidget {
 
 class _AuthGateState extends State<AuthGate> {
   bool _consentAccepted = false;
-  String? _checkedForUid;
+  bool _checked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AppDatabase>().getSetting('consent_v1').then((v) {
+      if (!mounted) return;
+      setState(() {
+        _consentAccepted = v == '1';
+        _checked = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snap) {
-        if (snap.connectionState == ConnectionState.waiting) {
-          return const _Splash();
-        }
-        final user = snap.data;
-        if (user == null) {
-          _checkedForUid = null;
-          return const LoginScreen();
-        }
-        if (_checkedForUid != user.uid) {
-          _checkedForUid = user.uid;
-          _consentAccepted = false;
-          context.read<AppDatabase>().getSetting('consent_v1').then((v) {
-            if (mounted && v == '1') setState(() => _consentAccepted = true);
-          });
-        }
-        if (!_consentAccepted) {
-          return ConsentScreen(
-            db: context.read<AppDatabase>(),
-            onAccepted: () => setState(() => _consentAccepted = true),
-          );
-        }
-        return const HomeShell();
-      },
-    );
+    if (!_checked) return const _Splash();
+    if (!_consentAccepted) {
+      return ConsentScreen(
+        db: context.read<AppDatabase>(),
+        onAccepted: () => setState(() => _consentAccepted = true),
+      );
+    }
+    return const HomeShell();
   }
 }
 
