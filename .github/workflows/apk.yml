@@ -71,3 +71,16 @@ jobs:
           path: |
             build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
             build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+
+      - name: Publish APKs to GitHub Release
+        if: success()
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Kisan Mitra v1.0.${{ github.run_number }}
+          body: "Installable debug-signed APKs. Install app-armeabi-v7a-release.apk on older phones, app-arm64-v8a-release.apk on modern ones."
+          files: |
+            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
