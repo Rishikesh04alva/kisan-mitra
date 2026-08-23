@@ -8,6 +8,8 @@ on:
 jobs:
   build-apk:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -37,7 +39,19 @@ jobs:
         continue-on-error: true
 
       - name: Build release APKs split by ABI
-        run: flutter build apk --release --split-per-abi
+        run: |
+          set -o pipefail
+          flutter build apk --release --split-per-abi 2>&1 | tee /tmp/build.log
+
+      - name: Publish error tail back to repo
+        if: failure()
+        run: |
+          tail -c 12000 /tmp/build.log > BUILD_ERROR.txt || echo "log unavailable" > BUILD_ERROR.txt
+          git config user.name "ci-log-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add BUILD_ERROR.txt
+          git commit -m "ci: capture build failure log [skip ci]"
+          git push
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
