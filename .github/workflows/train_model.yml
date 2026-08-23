@@ -1,0 +1,40 @@
+name: Train plant disease model
+
+on:
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install TensorFlow
+        run: pip install tensorflow-cpu==2.16.2 numpy pillow
+
+      - name: Download PlantVillage dataset
+        run: |
+          curl -L --retry 3 -o pv.zip \
+            "https://huggingface.co/datasets/Pranoy71/PlantVillage/resolve/main/plantvillage.zip"
+          mkdir -p data/pv
+          unzip -q pv.zip -d data/pv
+          rm pv.zip
+          find data/pv -maxdepth 3 -type d | head -20
+
+      - name: Train + export TFLite
+        run: python scripts/train_model.py
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plant-disease-model
+          path: |
+            out/plant_disease.tflite
+            out/plant_disease_labels.txt
+            out/log.csv
+          retention-days: 14
