@@ -6,6 +6,7 @@ class AppColors {
   static const paper = Color(0xFFFDF6EC);
   static const green = Color(0xFF1B7A43);
   static const greenDark = Color(0xFF0B3D2E);
+  static const greenLight = Color(0xFF95D5B2);
   static const yellow = Color(0xFFFFC700);
   static const red = Color(0xFFFF4B4B);
   static const blue = Color(0xFF4D96FF);

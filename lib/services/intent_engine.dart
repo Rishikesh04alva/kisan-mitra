@@ -66,7 +66,7 @@ class IntentEngine {
   static String normalize(String text) {
     final cleaned = text
         .toLowerCase()
-        .replaceAll(RegExp(r'[^\w\u0900-\u097F\s]'), ' ');
+        .replaceAll(RegExp(r'[^\p{L}\p{N}\s]', unicode: true), ' ');
     return cleaned.replaceAll(RegExp(r'\s+'), ' ').trim();
   }
 }

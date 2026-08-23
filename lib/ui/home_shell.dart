@@ -64,6 +64,10 @@ class _HomeShellState extends State<HomeShell> {
         ('en', 'English'),
         ('hi', 'हिन्दी'),
         ('mr', 'मराठी'),
+        ('kn', 'ಕನ್ನಡ'),
+        ('ta', 'தமிழ்'),
+        ('te', 'తెలుగు'),
+        ('ml', 'മലയാളം'),
       ];
       return SafeArea(
         child: Padding(

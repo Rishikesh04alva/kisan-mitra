@@ -22,10 +22,18 @@ const List<Locale> kSupportedLocales = [
   Locale('en'),
   Locale('hi'),
   Locale('mr'),
+  Locale('kn'),
+  Locale('ta'),
+  Locale('te'),
+  Locale('ml'),
 ];
 
 const Map<String, String> kSpeechLocale = {
   'en': 'en_IN',
   'hi': 'hi_IN',
   'mr': 'mr_IN',
+  'kn': 'kn_IN',
+  'ta': 'ta_IN',
+  'te': 'te_IN',
+  'ml': 'ml_IN',
 };

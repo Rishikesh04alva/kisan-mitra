@@ -57,6 +57,54 @@ class _AssistantScreenState extends State<AssistantScreen> {
     _scrollDown();
   }
 
+  void _openKeySheet() {
+    final ctrl = TextEditingController();
+    showNeoSheet(context, (sheetCtx) {
+      final s2 = S.of(sheetCtx);
+      return SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 20,
+            bottom: MediaQuery.of(sheetCtx).viewInsets.bottom + 20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(s2.t('ai_key_title'),
+                  style: Theme.of(sheetCtx).textTheme.titleLarge),
+              const SizedBox(height: 14),
+              TextField(
+                controller: ctrl,
+                maxLines: 2,
+                decoration: InputDecoration(hintText: s2.t('ai_key_hint')),
+              ),
+              const SizedBox(height: 12),
+              NeoButton(
+                label: s2.t('ai_key_save'),
+                emoji: '✅',
+                color: AppColors.greenLight,
+                onTap: () async {
+                  await sheetCtx
+                      .read<AssistantProvider>()
+                      .saveAiKey(ctrl.text);
+                  if (Navigator.of(sheetCtx).canPop()) {
+                    Navigator.of(sheetCtx).pop();
+                  }
+                },
+              ),
+              const SizedBox(height: 12),
+              Text(s2.t('ai_key_help'),
+                  style: Theme.of(sheetCtx).textTheme.bodyMedium),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
@@ -80,8 +128,29 @@ class _AssistantScreenState extends State<AssistantScreen> {
                 color: Colors.white,
               ),
             ),
+            if (assistant.aiReady) ...[
+              const SizedBox(width: 10),
+              Flexible(
+                child: NeoBadge(
+                  text: '⚡ ${s.t('ai_online_note')}',
+                  color: AppColors.greenLight,
+                ),
+              ),
+            ],
           ],
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: NeoIconSquare(
+              icon: Icons.vpn_key_rounded,
+              size: 46,
+              color:
+                  assistant.aiReady ? AppColors.green : AppColors.yellow,
+              onTap: _openKeySheet,
+            ),
+          ),
+        ],
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(kBorderWidth),
           child: Divider(height: kBorderWidth, thickness: kBorderWidth, color: AppColors.ink),

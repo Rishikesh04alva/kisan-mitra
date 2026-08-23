@@ -7,6 +7,7 @@ import '../../data/models/models.dart';
 import '../../providers/field_provider.dart';
 import '../../providers/tracker_provider.dart';
 import '../../services/weather_service.dart';
+import '../guide/fertilizer_guide_screen.dart';
 import '../widgets/common.dart';
 
 class TrackerScreen extends StatefulWidget {
@@ -69,6 +70,15 @@ class _TrackerScreenState extends State<TrackerScreen> {
                   ),
                 )),
           ..._fertCards(tracker.plan, s),
+          SectionHeader(text: s.t('fg_title'), emoji: '📖'),
+          NeoButton(
+            label: s.t('open_guide'),
+            emoji: '🧪',
+            color: AppColors.greenLight,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const FertilizerGuideScreen()),
+            ),
+          ),
         ],
       ),
     );
