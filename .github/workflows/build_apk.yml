@@ -29,7 +29,7 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Verify Flutter Setup
+      - name: Verify Environment
         run: flutter doctor -v
 
       - name: Install dependencies
@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kisan-mitra-android-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/*.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -53,8 +53,8 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.2.${{ github.run_number }}
-          name: "Kisan Mitra App Release v1.2.${{ github.run_number }}"
+          tag_name: v1.3.${{ github.run_number }}
+          name: "Kisan Mitra App Release v1.3.${{ github.run_number }}"
           body: |
             🌱 **Kisan Mitra — Smart Farmer Companion (Android App)**
             
@@ -66,7 +66,7 @@ jobs:
             - 🏛️ **Government Scheme Explorer**: PM-KISAN, PMFBY, KCC, Soil Health Card.
             - 🗣️ **Multilingual AI Assistant**: English, Hindi (हिंदी), and Marathi (मराठी).
             
-            📥 **Download File:** [app-release.apk](https://github.com/Rishikesh04alva/kisan-mitra/releases/download/v1.2.${{ github.run_number }}/app-release.apk)
-          files: build/app/outputs/flutter-apk/app-release.apk
+            📥 **Download File:** [app-release.apk](https://github.com/Rishikesh04alva/kisan-mitra/releases/download/v1.3.${{ github.run_number }}/app-release.apk)
+          files: build/app/outputs/flutter-apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
