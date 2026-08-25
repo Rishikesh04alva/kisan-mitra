@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:sqflite/sqflite.dart' show databaseFactory;
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'app.dart';
@@ -21,11 +19,6 @@ void main() {
 
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
-
-    // Initialize sqflite for web
-    if (kIsWeb) {
-      databaseFactory = databaseFactoryFfiWeb;
-    }
 
     final db = AppDatabase.instance;
     await db.init();
