@@ -82,7 +82,7 @@ class _NativeTfliteService extends TfliteServiceBase {
 
   /// Laplacian variance on the small square — cheap focus/blur estimate.
   double _blurScore(img.Image im) {
-    const n = _inputSize;
+    final n = _inputSize;
     final g = Float64List(n * n);
     for (var y = 0; y < n; y++) {
       for (var x = 0; x < n; x++) {
