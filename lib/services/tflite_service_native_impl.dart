@@ -334,7 +334,7 @@ class _NativeTfliteService extends TfliteServiceBase {
     // must come from that crop's classes. Global top-3 stay visible as
     // alternatives in case the crop hint itself was wrong.
     if (cropPrefix != null && cropPrefix.isNotEmpty) {
-      final pfx = '$cropPrefix___';
+      final pfx = '${cropPrefix}___';
       for (final i in ranked) {
         if (_labels[i].startsWith(pfx)) {
           bestIdx = i;
