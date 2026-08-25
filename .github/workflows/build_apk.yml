@@ -7,9 +7,12 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    name: Build Android APK & Web App
+    name: Build Android Release APK
     runs-on: ubuntu-latest
 
     steps:
@@ -25,9 +28,11 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.47.1'
           channel: 'stable'
           cache: true
+
+      - name: Verify Flutter & Environment
+        run: flutter doctor -v
 
       - name: Install dependencies
         run: flutter pub get
@@ -38,17 +43,31 @@ jobs:
       - name: Build Android Release APK
         run: flutter build apk --release --no-tree-shake-icons
 
-      - name: Build Web App
-        run: flutter build web --release
-
-      - name: Upload Android APK
+      - name: Upload Android APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: kisan-mitra-android-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
 
-      - name: Upload Web Build
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
         with:
-          name: kisan-mitra-web-bundle
-          path: build/web/
+          tag_name: v1.0.0
+          name: "Kisan Mitra v1.0.0 Release (Android APK)"
+          body: |
+            🌱 **Kisan Mitra — Smart Farmer Companion**
+            
+            ### ✨ Features Included:
+            - 📍 **Real-time Weather & Location Sync**: Automatic IP fallback, GPS sync, and Indian agricultural region selector.
+            - 🔍 **High-Accuracy Leaf Disease & Pest Scanner**: Instant leaf diagnostic with confidence rating and treatment steps.
+            - 🧪 **Crop & Disease-Driven Fertilizer Guidance**: Stage-wise NPK recommendations (Urea, DAP, MOP) and disease recovery nutrition.
+            - 🚜 **Field & Irrigation Tracker**: Daily smart irrigation decisions.
+            - 🏛️ **Government Scheme Explorer**: PM-KISAN, PMFBY, KCC, Soil Health Card with offline eligibility checker.
+            - 🗣️ **AI Multilingual Voice Assistant**: Support for English, Hindi (हिंदी), and Marathi (मराठी).
+            
+            📥 **Download the APK below:** `app-release.apk`
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
