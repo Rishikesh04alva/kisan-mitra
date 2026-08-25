@@ -5,8 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.kisan_mitra"
-    compileSdk = 35
-    ndkVersion = "26.1.10909125"
+    compileSdk = 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -17,7 +16,7 @@ android {
     defaultConfig {
         applicationId = "com.example.kisan_mitra"
         minSdk = 23
-        targetSdk = 35
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
