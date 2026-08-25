@@ -3,8 +3,6 @@ name: Build & Release Android APK
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -31,7 +29,7 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Verify Flutter & Environment
+      - name: Verify Flutter Setup
         run: flutter doctor -v
 
       - name: Install dependencies
@@ -49,25 +47,26 @@ jobs:
           name: kisan-mitra-android-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
+          retention-days: 30
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release with APK
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.0
-          name: "Kisan Mitra v1.0.0 Release (Android APK)"
+          tag_name: v1.2.${{ github.run_number }}
+          name: "Kisan Mitra App Release v1.2.${{ github.run_number }}"
           body: |
-            🌱 **Kisan Mitra — Smart Farmer Companion**
+            🌱 **Kisan Mitra — Smart Farmer Companion (Android App)**
             
-            ### ✨ Features Included:
-            - 📍 **Real-time Weather & Location Sync**: Automatic IP fallback, GPS sync, and Indian agricultural region selector.
-            - 🔍 **High-Accuracy Leaf Disease & Pest Scanner**: Instant leaf diagnostic with confidence rating and treatment steps.
-            - 🧪 **Crop & Disease-Driven Fertilizer Guidance**: Stage-wise NPK recommendations (Urea, DAP, MOP) and disease recovery nutrition.
-            - 🚜 **Field & Irrigation Tracker**: Daily smart irrigation decisions.
-            - 🏛️ **Government Scheme Explorer**: PM-KISAN, PMFBY, KCC, Soil Health Card with offline eligibility checker.
-            - 🗣️ **AI Multilingual Voice Assistant**: Support for English, Hindi (हिंदी), and Marathi (मराठी).
+            ### ✨ What's Inside:
+            - 📍 **Real-time Location & Weather Sync**: Automatic IP fallback, live GPS sync, and Indian agricultural region search.
+            - 🔍 **Accurate Disease & Pest Scanner**: Instant leaf symptom classification with organic & chemical treatment dosages.
+            - 🧪 **Crop & Disease-Specific Fertilizer Guide**: Stage-wise N-P-K schedules (Urea, DAP, MOP in kg/acre) and disease recovery nutrition.
+            - 🚜 **Smart Irrigation Tracker**: Daily rain-aware watering decisions.
+            - 🏛️ **Government Scheme Explorer**: PM-KISAN, PMFBY, KCC, Soil Health Card.
+            - 🗣️ **Multilingual AI Assistant**: English, Hindi (हिंदी), and Marathi (मराठी).
             
-            📥 **Download the APK below:** `app-release.apk`
+            📥 **Download File:** [app-release.apk](https://github.com/Rishikesh04alva/kisan-mitra/releases/download/v1.2.${{ github.run_number }}/app-release.apk)
           files: build/app/outputs/flutter-apk/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
