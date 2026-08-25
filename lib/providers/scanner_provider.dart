@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -12,7 +10,7 @@ enum ScanState { idle, analyzing, done, error }
 
 class ScannerProvider extends ChangeNotifier {
   final AppDatabase db;
-  final TfliteService tflite;
+  final TfliteServiceBase tflite;
 
   ScanState state = ScanState.idle;
   ScanRecord? lastResult;

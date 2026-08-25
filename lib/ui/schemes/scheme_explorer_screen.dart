@@ -8,6 +8,54 @@ import '../../data/models/models.dart';
 import '../../providers/scheme_provider.dart';
 import '../widgets/common.dart';
 
+String _translateCategory(String cat, String lang) {
+  final map = {
+    'ALL': {'en': 'ALL', 'hi': 'सभी', 'mr': 'सर्व', 'kn': 'ಎಲ್ಲಾ', 'ta': 'அனைத்து', 'te': 'అన్ని', 'ml': 'എല്ലാം'},
+    'INCOME': {'en': 'INCOME', 'hi': 'आय', 'mr': 'उत्पन्न', 'kn': 'ಆದಾಯ', 'ta': 'வருமானம்', 'te': 'ఆదాయం', 'ml': 'വരുമാനം'},
+    'INSURANCE': {'en': 'INSURANCE', 'hi': 'बीमा', 'mr': 'विमा', 'kn': 'ವಿಮೆ', 'ta': 'காப்பீடு', 'te': 'బీమా', 'ml': 'ഇൻഷുറൻസ്'},
+    'CREDIT': {'en': 'CREDIT', 'hi': 'ऋण', 'mr': 'कर्ज', 'kn': 'ಸಾಲ', 'ta': 'கடன்', 'te': 'రుణం', 'ml': 'വായ്പ'},
+    'SOIL': {'en': 'SOIL', 'hi': 'मिट्टी', 'mr': 'माती', 'kn': 'ಮಣ್ಣು', 'ta': 'மண்', 'te': 'మట్టి', 'ml': 'മണ്ണ്'},
+    'ENERGY': {'en': 'ENERGY', 'hi': 'ऊर्जा', 'mr': 'ऊर्जा', 'kn': 'ಶಕ್ತಿ', 'ta': 'ஆற்றல்', 'te': 'శక్తి', 'ml': 'എനർജി'},
+    'MARKET': {'en': 'MARKET', 'hi': 'बाज़ार', 'mr': 'बाजार', 'kn': 'ಮಾರುಕಟ್ಟೆ', 'ta': 'சந்தை', 'te': 'మార్కెట్', 'ml': 'മാർക്കറ്റ്'},
+    'ORGANIC': {'en': 'ORGANIC', 'hi': 'जैविक', 'mr': 'सेंद्रिय', 'kn': 'ಸಾವಯವ', 'ta': 'இயற்கை', 'te': 'సేంద్రియ', 'ml': 'ജൈവിക'},
+    'INFRA': {'en': 'INFRA', 'hi': 'अवसंरचना', 'mr': 'पायाभूत', 'kn': 'ಮೂಲಸೌಕರ್ಯ', 'ta': 'உள்கட்டமைப்பு', 'te': 'మౌలిక', 'ml': 'അടിസ്ഥാനം'},
+    'WATER': {'en': 'WATER', 'hi': 'पानी', 'mr': 'पाणी', 'kn': 'ನೀರು', 'ta': 'நீர்', 'te': 'నీరు', 'ml': 'ജലം'},
+    'WELFARE': {'en': 'WELFARE', 'hi': 'कल्याण', 'mr': 'कल्याण', 'kn': 'ಕಲ್ಯಾಣ', 'ta': 'நலவாழ்வு', 'te': 'సంక్షేమం', 'ml': 'ക്ഷേമം'},
+    'GROUP': {'en': 'GROUP', 'hi': 'समूह', 'mr': 'गट', 'kn': 'ಗುಂಪು', 'ta': 'குழு', 'te': 'సమూహం', 'ml': 'ഗ്രൂപ്പ്'},
+    'MACHINERY': {'en': 'MACHINERY', 'hi': 'यंत्र', 'mr': 'यंत्र', 'kn': 'ಯಂತ್ರ', 'ta': 'இயந்திரம்', 'te': 'యంత్రం', 'ml': 'യന്ത്രം'},
+    'CROP_CARE': {'en': 'CROP CARE', 'hi': 'फसल देखभाल', 'mr': 'पीक देखभाल', 'kn': 'ಬೆಳೆ ಆರೈಕೆ', 'ta': 'பயிர் பராமரிப்பு', 'te': 'పంట సంరక్షణ', 'ml': 'വിള പരിപാലനം'},
+    'INNOVATION': {'en': 'INNOVATION', 'hi': 'नवाचार', 'mr': 'नवनिर्मिती', 'kn': 'ನಾವೀಣ್ಯ', 'ta': 'புதுமை', 'te': 'నవ్యత', 'ml': 'നവീകരണം'},
+  };
+  return map[cat]?[lang] ?? cat;
+}
+
+String _translateState(String state, String lang) {
+  final map = {
+    'ALL': {'en': 'ALL', 'hi': 'सभी', 'mr': 'सर्व', 'kn': 'ಎಲ್ಲಾ', 'ta': 'அனைத்து', 'te': 'అన్ని', 'ml': 'എല്ലാം'},
+    'TELANGANA': {'en': 'Telangana', 'hi': 'तेलंगाना', 'mr': 'तेलंगणा', 'kn': 'ತೆಲಂಗಾಣ', 'ta': 'தெலங்கானா', 'te': 'తెలంగాణ', 'ml': 'തെലങ്കാന'},
+    'MAHARASHTRA': {'en': 'Maharashtra', 'hi': 'महाराष्ट्र', 'mr': 'महाराष्ट्र', 'kn': 'ಮಹಾರಾಷ್ಟ್ರ', 'ta': 'மகாராஷ்டிரா', 'te': 'మహారాష్ట్ర', 'ml': 'മഹാരാഷ്ട്ര'},
+    'UTTAR_PRADESH': {'en': 'Uttar Pradesh', 'hi': 'उत्तर प्रदेश', 'mr': 'उत्तर प्रदेश', 'kn': 'ಉತ್ತರ ಪ್ರದೇಶ', 'ta': 'உத்தரப் பிரதேசம்', 'te': 'ఉత్తర్ ప్రదేశ్', 'ml': 'ഉത്തർപ്രദേശ്'},
+    'MADHYA_PRADESH': {'en': 'Madhya Pradesh', 'hi': 'मध्य प्रदेश', 'mr': 'मध्य प्रदेश', 'kn': 'ಮಧ್ಯ ಪ್ರದೇಶ', 'ta': 'மத்திய பிரதேசம்', 'te': 'మధ్యప్రదేశ్', 'ml': 'മധ്യപ്രദേശ്'},
+    'RAJASTHAN': {'en': 'Rajasthan', 'hi': 'राजस्थान', 'mr': 'राजस्थान', 'kn': 'ರಾಜಸ್ಥಾನ', 'ta': 'ராஜஸ்தான்', 'te': 'రాజస్థాన్', 'ml': 'രാജസ്ഥാൻ'},
+    'KARNATAKA': {'en': 'Karnataka', 'hi': 'कर्नाटक', 'mr': 'कर्नाटक', 'kn': 'ಕರ್ನಾಟಕ', 'ta': 'கர்நாடகா', 'te': 'కర్ణాటక', 'ml': 'കർണാടക'},
+    'TAMIL_NADU': {'en': 'Tamil Nadu', 'hi': 'तमिलनाडु', 'mr': 'तमिळनाडू', 'kn': 'ತಮಿಳುನಾಡು', 'ta': 'தமிழ்நாடு', 'te': 'తమిళనాడు', 'ml': 'തമിഴ്‌നാട്'},
+    'GUJARAT': {'en': 'Gujarat', 'hi': 'गुजरात', 'mr': 'गुजरात', 'kn': 'ಗುಜರಾತ್', 'ta': 'குஜராத்', 'te': 'గుజరాత్', 'ml': 'ഗുജറാത്ത്'},
+    'BIHAR': {'en': 'Bihar', 'hi': 'बिहार', 'mr': 'बिहार', 'kn': 'ಬಿಹಾರ್', 'ta': 'பிஹார்', 'te': 'బిహార్', 'ml': 'ബിഹാർ'},
+    'ODISHA': {'en': 'Odisha', 'hi': 'ओडिशा', 'mr': 'ओडिशा', 'kn': 'ಒಡಿಶಾ', 'ta': 'ஒடிசா', 'te': 'ఒడిశా', 'ml': 'ഒഡിഷ'},
+    'MEGHALAYA': {'en': 'Meghalaya', 'hi': 'मेघालय', 'mr': 'मेघालय', 'kn': 'ಮೆಘಾಲಯ', 'ta': 'மேகலயா', 'te': 'మేఘాలయ', 'ml': 'മേഘാലയ'},
+    'JHARKHAND': {'en': 'Jharkhand', 'hi': 'झारखंड', 'mr': 'झारखंड', 'kn': 'ಝಾರ್ಖಂಡ್', 'ta': 'ஜார்கண்ட்', 'te': 'జార్ఖండ్', 'ml': 'ഝാർഖണ്ഡ്'},
+    'PUNJAB': {'en': 'Punjab', 'hi': 'पंजाब', 'mr': 'पंजाब', 'kn': 'ಪಂಜಾಬ್', 'ta': 'பஞ்சாப்', 'te': 'పంజాబ్', 'ml': 'പഞ്ചാബ്'},
+    'HARYANA': {'en': 'Haryana', 'hi': 'हरियाणा', 'mr': 'हरियाणा', 'kn': 'ಹರಿಯಾಣ', 'ta': 'ஹரியானா', 'te': 'హరియాణా', 'ml': 'ഹരിയാണ'},
+    'WEST_BENGAL': {'en': 'West Bengal', 'hi': 'पश्चिम बंगाल', 'mr': 'पश्चिम बंगाल', 'kn': 'ಪಶ್ಚಿಮ ಬಂಗಾಳ', 'ta': 'மேற்கு வங்காளம்', 'te': 'పశ్చిమ బెంగాల్', 'ml': 'പശ്ചിം ബംഗാൾ'},
+    'CHHATTISGARH': {'en': 'Chhattisgarh', 'hi': 'छत्तीसगढ़', 'mr': 'छत्तीसगढ', 'kn': 'ಛತ್ತೀಸ್‌ಗಢ್', 'ta': 'சத்தீஸ்கர்', 'te': 'ఛత్తీస్‌గఢ్', 'ml': 'ഛത്തീസ്ഗഢ്'},
+    'KERALA': {'en': 'Kerala', 'hi': 'केरल', 'mr': 'केरळ', 'kn': 'ಕೇರಳ', 'ta': 'கேரளா', 'te': 'కేరళ', 'ml': 'കേരള'},
+    'TRIPURA': {'en': 'Tripura', 'hi': 'त्रिपुरा', 'mr': 'त्रिपुरा', 'kn': 'ತ್ರಿಪುರಾ', 'ta': 'திரிபுரா', 'te': 'త్రిపుర', 'ml': 'ത്രിപുര'},
+    'ASSAM': {'en': 'Assam', 'hi': 'असम', 'mr': 'असम', 'kn': 'ಅಸ್ಸಾಂ', 'ta': 'அசாம்', 'te': 'అస్సాం', 'ml': 'അസം'},
+    'NAGALAND': {'en': 'Nagaland', 'hi': 'नागालैंड', 'mr': 'नागालँड', 'kn': 'ನಾಗಾಲ್ಯಾಂಡ್', 'ta': 'நாகலாந்து', 'te': 'నాగాలాండ్', 'ml': 'നാഗാലാൻഡ്'},
+  };
+  return map[state]?[lang] ?? state;
+}
+
 class SchemeExplorerScreen extends StatefulWidget {
   const SchemeExplorerScreen({super.key});
 
@@ -104,7 +152,8 @@ class _SchemeExplorerScreenState extends State<SchemeExplorerScreen> {
 
   Widget _chip(String label, bool selected, {required bool isState}) {
     final s = S.of(context);
-    final text = label == 'ALL' ? s.t('cat_all') : label;
+    final lang = s.code;
+    final text = isState ? _translateState(label, lang) : _translateCategory(label, lang);
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: NeoCard(
@@ -214,9 +263,9 @@ class _DetailSheet extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                NeoBadge(text: scheme.category, color: AppColors.blue),
+                NeoBadge(text: _translateCategory(scheme.category, lang), color: AppColors.blue),
                 if (scheme.state != 'ALL')
-                  NeoBadge(text: scheme.state, color: AppColors.yellow),
+                  NeoBadge(text: _translateState(scheme.state, lang), color: AppColors.yellow),
               ],
             ),
             SectionHeader(text: s.t('benefits'), emoji: '🎁'),

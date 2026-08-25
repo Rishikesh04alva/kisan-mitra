@@ -11,7 +11,6 @@ import '../providers/locale_provider.dart';
 import '../providers/scheme_provider.dart';
 import '../providers/tracker_provider.dart';
 import '../services/sync_service.dart';
-import '../services/weather_service.dart';
 import 'assistant/assistant_screen.dart';
 import 'mapper/field_mapper_screen.dart';
 import 'scanner/scanner_screen.dart';
@@ -45,7 +44,7 @@ class _HomeShellState extends State<HomeShell> {
     _lastSyncAttempt = now;
     SyncService.runOnce();
     if (!mounted) return;
-    context.read<TrackerProvider>().refreshWeatherOnline(WeatherService());
+    context.read<TrackerProvider>().refreshWeatherOnline(requestGps: true);
     context.read<SchemeProvider>().init();
   }
 
@@ -112,8 +111,8 @@ class _HomeShellState extends State<HomeShell> {
     final pages = [
       TrackerScreen(onOpenMapper: () => _goTo(1)),
       FieldMapperScreen(onOpenScanner: () => _goTo(2)),
-      ScannerScreen(),
-      SchemeExplorerScreen(),
+      const ScannerScreen(),
+      const SchemeExplorerScreen(),
     ];
     final navItems = [
       (Icons.home_rounded, s.t('nav_home')),

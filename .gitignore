@@ -9,3 +9,6 @@ android/.gradle/
 android/local.properties
 ios/Podfile.lock
 *.log
+.freebuff/
+node_modules/
+server/node_modules/

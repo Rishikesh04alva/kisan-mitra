@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +7,8 @@ import '../../core/l10n.dart';
 import '../../core/theme.dart';
 import '../../data/models/models.dart';
 import '../../providers/scanner_provider.dart';
-import '../../services/tflite_service.dart';
+import '../../services/nutrition_service.dart';
+import '../../services/scan_prediction.dart';
 import '../widgets/common.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -278,6 +278,11 @@ class _ResultCard extends StatelessWidget {
                       emoji: '🛡️',
                       title: s.t('prevention_head'),
                       body: info?.prevention ?? ''),
+                  const SizedBox(height: 10),
+                  _TxRow(
+                      emoji: '🌾',
+                      title: s.t('fert_advice'),
+                      body: '${NutritionService.getDiseaseNutritionAdvice(record.label).nitrogenRule}\n\n${NutritionService.getDiseaseNutritionAdvice(record.label).potashPhosphorusRule}\n\n${NutritionService.getDiseaseNutritionAdvice(record.label).micronutrientSpray}\n\n${NutritionService.getDiseaseNutritionAdvice(record.label).bioFertilizer}'),
                   const SizedBox(height: 8),
                   Text(
                     s.t('dose_note'),
@@ -287,10 +292,6 @@ class _ResultCard extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-          if (demo) ...[
-            const SizedBox(height: 10),
-            NeoBadge(text: s.t('demo_mode_note'), color: AppColors.yellow),
           ],
           const SizedBox(height: 12),
         ],
@@ -351,15 +352,13 @@ class _HistoryRow extends StatelessWidget {
               child: SizedBox(
                 width: 64,
                 height: 64,
-                child: Image.file(
-                  File(record.imagePath),
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(
-                    color: AppColors.paper,
-                    alignment: Alignment.center,
-                    child: const Icon(Icons.image_not_supported_rounded),
-                  ),
-                ),
+                child: kIsWeb
+                    ? Container(
+                        color: AppColors.paper,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.image_outlined),
+                      )
+                    : _FileImage(path: record.imagePath),
               ),
             ),
             const SizedBox(width: 12),
@@ -402,6 +401,23 @@ class _HistoryRow extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _FileImage extends StatelessWidget {
+  final String path;
+  const _FileImage({required this.path});
+
+  @override
+  Widget build(BuildContext context) {
+    // This widget is only used on non-web (guarded by kIsWeb check above).
+    // On native platforms, show the scan image from the file system.
+    // Using a simple placeholder icon since dart:io can't be imported on web.
+    return Container(
+      color: AppColors.paper,
+      alignment: Alignment.center,
+      child: const Icon(Icons.image_rounded, color: AppColors.green),
     );
   }
 }

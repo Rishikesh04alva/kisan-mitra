@@ -98,11 +98,23 @@ class AssistantProvider extends ChangeNotifier {
 
   Future<String> _askAi(String question, String langCode) async {
     final ctx = await _buildContext();
+    // Build conversation history for context continuity (last 6 messages max)
+    final history = <Map<String, String>>[];
+    final recentMsgs = messages.length > 6
+        ? messages.sublist(messages.length - 6)
+        : messages;
+    for (final msg in recentMsgs) {
+      history.add({
+        'role': msg.fromUser ? 'user' : 'assistant',
+        'content': msg.text,
+      });
+    }
     return ai.ask(
       apiKey: effectiveKey,
       question: question,
       langCode: langCode,
       context: ctx,
+      history: history,
     );
   }
 
@@ -250,8 +262,8 @@ class AssistantProvider extends ChangeNotifier {
     notifyListeners();
     _stt.listen(
       localeId: localeId,
-      listenMode: ListenMode.dictation,
       listenOptions: SpeechListenOptions(
+        listenMode: ListenMode.dictation,
         partialResults: false,
         cancelOnError: true,
       ),

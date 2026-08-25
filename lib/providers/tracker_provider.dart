@@ -1,16 +1,22 @@
 import 'package:flutter/foundation.dart';
 
+import '../core/constants.dart';
 import '../core/db/app_database.dart';
 import '../data/models/models.dart';
+import '../services/location_service.dart';
 import '../services/weather_service.dart';
 
 class TrackerProvider extends ChangeNotifier {
   final AppDatabase db;
+  final LocationService locationService = LocationService();
+  final WeatherService weatherService = WeatherService();
 
   List<PlanRow> plan = [];
   WeatherSnapshot? weather;
   bool weatherStale = true;
   bool loadingWeather = false;
+  bool isLocating = false;
+  String? locationMessage;
   DateTime? lastRefreshed;
 
   TrackerProvider(this.db);
@@ -34,14 +40,17 @@ class TrackerProvider extends ChangeNotifier {
     return (d: IrrigationDecision.monitor, reasonKey: 'r_soil_moist_ok');
   }
 
+  ScanRecord? latestScan;
+
   Future<void> refresh() async {
     final now = DateTime.now();
     final crops = await db.getCrops();
     final byId = {for (final c in crops) c.id: c};
     final plots = (await db.getPlots()).where((p) => p.isPlanted).toList();
     weather = await db.getCachedWeather();
+    latestScan = await db.latestScan();
     weatherStale =
-        weather == null || !weather!.isFresh(const Duration(hours: 12), now);
+        weather == null || !weather!.isFresh(const Duration(hours: 4), now);
     final rows = <PlanRow>[];
     for (final plot in plots) {
       final crop = byId[plot.cropId!];
@@ -70,6 +79,20 @@ class TrackerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setLocation({
+    required double lat,
+    required double lon,
+    required String name,
+    bool isGps = false,
+  }) async {
+    await refreshWeatherOnline(
+      requestGps: false,
+      customLat: lat,
+      customLon: lon,
+      customLocationName: name,
+    );
+  }
+
   static FertStage? _fertDue(Crop crop, int elapsedDaysSinceSowing) {
     for (final s in crop.stages) {
       if (elapsedDaysSinceSowing >= s.fromDay &&
@@ -85,10 +108,56 @@ class TrackerProvider extends ChangeNotifier {
     await refresh();
   }
 
-  Future<bool> refreshWeatherOnline(WeatherService service) async {
+  Future<bool> refreshWeatherOnline({
+    WeatherService? service,
+    bool requestGps = true,
+    double? customLat,
+    double? customLon,
+    String? customLocationName,
+  }) async {
     loadingWeather = true;
+    locationMessage = null;
     notifyListeners();
-    final fresh = await service.fetchCurrent();
+
+    final ws = service ?? weatherService;
+    double lat = customLat ?? kDefaultLat;
+    double lon = customLon ?? kDefaultLon;
+    String? locationName = customLocationName;
+    bool isGps = false;
+
+    if (customLat == null && requestGps) {
+      isLocating = true;
+      notifyListeners();
+      try {
+        final locRes = await locationService.getCurrentLocation(
+          requestPermission: true,
+        );
+        lat = locRes.location.latitude;
+        lon = locRes.location.longitude;
+        locationName = locRes.location.displayName;
+        isGps = locRes.isGpsSuccess;
+        if (!locRes.isGpsSuccess && locRes.errorMessage != null) {
+          locationMessage = locRes.errorMessage;
+        }
+      } catch (e) {
+        locationMessage = 'Could not access GPS. Using default location.';
+      } finally {
+        isLocating = false;
+      }
+    } else if (weather != null && weather!.lat != null && weather!.lon != null) {
+      lat = weather!.lat!;
+      lon = weather!.lon!;
+      locationName = weather!.locationName;
+      isGps = weather!.isGpsLocation;
+    }
+
+    final fresh = await ws.fetchCurrent(
+      lat: lat,
+      lon: lon,
+      locationName: locationName,
+      isGpsLocation: isGps,
+    );
+
     if (fresh != null) {
       await db.saveWeather(fresh);
     }
@@ -117,5 +186,12 @@ class TrackerProvider extends ChangeNotifier {
       if (result.d == IrrigationDecision.water) count++;
     }
     return count;
+  }
+
+  @override
+  void dispose() {
+    locationService.dispose();
+    weatherService.dispose();
+    super.dispose();
   }
 }

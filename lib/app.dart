@@ -6,7 +6,6 @@ import 'core/constants.dart';
 import 'core/db/app_database.dart';
 import 'core/l10n.dart';
 import 'core/theme.dart';
-import 'data/models/models.dart';
 import 'providers/assistant_provider.dart';
 import 'providers/field_provider.dart';
 import 'providers/locale_provider.dart';
@@ -20,7 +19,7 @@ import 'ui/home_shell.dart';
 
 class KisanMitraApp extends StatelessWidget {
   final AppDatabase db;
-  final TfliteService tflite;
+  final TfliteServiceBase tflite;
   final bool firebaseReady;
 
   const KisanMitraApp({
@@ -36,7 +35,7 @@ class KisanMitraApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LocaleProvider()..load()),
         Provider<AppDatabase>.value(value: db),
-        Provider<TfliteService>.value(value: tflite),
+        Provider<TfliteServiceBase>.value(value: tflite),
         Provider<IntentEngine>(
           create: (_) => IntentEngine()..load(),
         ),
@@ -49,7 +48,7 @@ class KisanMitraApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (c) => ScannerProvider(
             c.read<AppDatabase>(),
-            c.read<TfliteService>(),
+            c.read<TfliteServiceBase>(),
           )..init(),
         ),
         ChangeNotifierProvider(

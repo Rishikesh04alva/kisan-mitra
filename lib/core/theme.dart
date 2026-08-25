@@ -3,6 +3,7 @@ import 'constants.dart';
 
 class AppColors {
   static const ink = Color(0xFF111111);
+  static const inkMuted = Color(0xFF666666);
   static const paper = Color(0xFFFDF6EC);
   static const green = Color(0xFF1B7A43);
   static const greenDark = Color(0xFF0B3D2E);

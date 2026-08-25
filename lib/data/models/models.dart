@@ -166,12 +166,20 @@ class Scheme {
   final String nameEn;
   final String nameHi;
   final String nameMr;
+  final String nameKn;
+  final String nameTa;
+  final String nameTe;
+  final String nameMl;
   final String category;
   final String state;
   final List<String> eligibility;
   final String benEn;
   final String benHi;
   final String benMr;
+  final String benKn;
+  final String benTa;
+  final String benTe;
+  final String benMl;
   final String url;
   final String phone;
 
@@ -180,12 +188,20 @@ class Scheme {
     required this.nameEn,
     required this.nameHi,
     required this.nameMr,
+    this.nameKn = '',
+    this.nameTa = '',
+    this.nameTe = '',
+    this.nameMl = '',
     required this.category,
     required this.state,
     required this.eligibility,
     required this.benEn,
     required this.benHi,
     required this.benMr,
+    this.benKn = '',
+    this.benTa = '',
+    this.benTe = '',
+    this.benMl = '',
     required this.url,
     required this.phone,
   });
@@ -196,6 +212,14 @@ class Scheme {
         return nameHi;
       case 'mr':
         return nameMr;
+      case 'kn':
+        return nameKn.isNotEmpty ? nameKn : nameEn;
+      case 'ta':
+        return nameTa.isNotEmpty ? nameTa : nameEn;
+      case 'te':
+        return nameTe.isNotEmpty ? nameTe : nameEn;
+      case 'ml':
+        return nameMl.isNotEmpty ? nameMl : nameEn;
       default:
         return nameEn;
     }
@@ -207,6 +231,14 @@ class Scheme {
         return benHi;
       case 'mr':
         return benMr;
+      case 'kn':
+        return benKn.isNotEmpty ? benKn : benEn;
+      case 'ta':
+        return benTa.isNotEmpty ? benTa : benEn;
+      case 'te':
+        return benTe.isNotEmpty ? benTe : benEn;
+      case 'ml':
+        return benMl.isNotEmpty ? benMl : benEn;
       default:
         return benEn;
     }
@@ -217,12 +249,20 @@ class Scheme {
         'nameEn': nameEn,
         'nameHi': nameHi,
         'nameMr': nameMr,
+        'nameKn': nameKn,
+        'nameTa': nameTa,
+        'nameTe': nameTe,
+        'nameMl': nameMl,
         'category': category,
         'state': state,
         'elig': eligibility.join('|'),
         'benEn': benEn,
         'benHi': benHi,
         'benMr': benMr,
+        'benKn': benKn,
+        'benTa': benTa,
+        'benTe': benTe,
+        'benMl': benMl,
         'url': url,
         'phone': phone,
       };
@@ -232,12 +272,20 @@ class Scheme {
         nameEn: m['nameEn'] as String,
         nameHi: m['nameHi'] as String,
         nameMr: m['nameMr'] as String,
+        nameKn: m['nameKn'] as String? ?? '',
+        nameTa: m['nameTa'] as String? ?? '',
+        nameTe: m['nameTe'] as String? ?? '',
+        nameMl: m['nameMl'] as String? ?? '',
         category: m['category'] as String,
         state: m['state'] as String? ?? 'ALL',
         eligibility: (m['elig'] as String? ?? '').split('|').where((e) => e.isNotEmpty).toList(),
         benEn: m['benEn'] as String,
         benHi: m['benHi'] as String,
         benMr: m['benMr'] as String,
+        benKn: m['benKn'] as String? ?? '',
+        benTa: m['benTa'] as String? ?? '',
+        benTe: m['benTe'] as String? ?? '',
+        benMl: m['benMl'] as String? ?? '',
         url: m['url'] as String? ?? '',
         phone: m['phone'] as String? ?? '',
       );
@@ -247,6 +295,10 @@ class Scheme {
         nameEn: j['nameEn'] as String,
         nameHi: j['nameHi'] as String,
         nameMr: j['nameMr'] as String,
+        nameKn: j['nameKn'] as String? ?? '',
+        nameTa: j['nameTa'] as String? ?? '',
+        nameTe: j['nameTe'] as String? ?? '',
+        nameMl: j['nameMl'] as String? ?? '',
         category: j['category'] as String,
         state: j['state'] as String? ?? 'ALL',
         eligibility:
@@ -254,6 +306,10 @@ class Scheme {
         benEn: j['benefitEn'] as String,
         benHi: j['benefitHi'] as String,
         benMr: j['benefitMr'] as String,
+        benKn: j['benefitKn'] as String? ?? '',
+        benTa: j['benefitTa'] as String? ?? '',
+        benTe: j['benefitTe'] as String? ?? '',
+        benMl: j['benefitMl'] as String? ?? '',
         url: j['url'] as String? ?? '',
         phone: j['phone'] as String? ?? '',
       );
@@ -263,16 +319,69 @@ class WeatherSnapshot {
   final double tempC;
   final double humidity;
   final double rainMm;
+  final int weatherCode;
+  final double windSpeedKmH;
+  final double? apparentTempC;
+  final String? locationName;
+  final double? lat;
+  final double? lon;
   final DateTime fetchedAt;
+  final bool isGpsLocation;
 
   const WeatherSnapshot({
     required this.tempC,
     required this.humidity,
     required this.rainMm,
+    this.weatherCode = 0,
+    this.windSpeedKmH = 0.0,
+    this.apparentTempC,
+    this.locationName,
+    this.lat,
+    this.lon,
     required this.fetchedAt,
+    this.isGpsLocation = false,
   });
 
-  bool isFresh(Duration maxAge, DateTime now) => now.difference(fetchedAt) <= maxAge;
+  bool isFresh(Duration maxAge, DateTime now) =>
+      now.difference(fetchedAt) <= maxAge;
+
+  String get weatherEmoji {
+    if (weatherCode == 0) return '☀️';
+    if (weatherCode <= 3) return '⛅';
+    if (weatherCode <= 48) return '🌫️';
+    if (weatherCode <= 57) return '🌦️';
+    if (weatherCode <= 67) return '🌧️';
+    if (weatherCode <= 77) return '🌨️';
+    if (weatherCode <= 82) return '🌧️';
+    if (weatherCode <= 99) return '⛈️';
+    return '🌤️';
+  }
+
+  String get conditionKey {
+    if (weatherCode == 0) return 'w_clear';
+    if (weatherCode <= 3) return 'w_partly_cloudy';
+    if (weatherCode <= 48) return 'w_fog';
+    if (weatherCode <= 57) return 'w_drizzle';
+    if (weatherCode <= 67) return 'w_rain';
+    if (weatherCode <= 77) return 'w_snow';
+    if (weatherCode <= 82) return 'w_showers';
+    if (weatherCode <= 99) return 'w_thunderstorm';
+    return 'w_clear';
+  }
+}
+
+class UserLocation {
+  final double latitude;
+  final double longitude;
+  final String displayName;
+  final bool isGps;
+
+  const UserLocation({
+    required this.latitude,
+    required this.longitude,
+    required this.displayName,
+    this.isGps = false,
+  });
 }
 
 enum IrrigationDecision { water, skip, monitor }

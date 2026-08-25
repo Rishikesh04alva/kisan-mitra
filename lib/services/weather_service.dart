@@ -11,15 +11,17 @@ class WeatherService {
   Future<WeatherSnapshot?> fetchCurrent({
     double lat = kDefaultLat,
     double lon = kDefaultLon,
+    String? locationName,
+    bool isGpsLocation = false,
   }) async {
     try {
       final uri = Uri.parse(
         'https://api.open-meteo.com/v1/forecast'
         '?latitude=$lat&longitude=$lon'
-        '&current=temperature_2m,relative_humidity_2m,precipitation'
-        '&daily=precipitation_sum&forecast_days=1',
+        '&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,apparent_temperature'
+        '&daily=precipitation_sum,temperature_2m_max,temperature_2m_min&forecast_days=1',
       );
-      final res = await _client.get(uri).timeout(const Duration(seconds: 8));
+      final res = await _client.get(uri).timeout(const Duration(seconds: 10));
       if (res.statusCode != 200) return null;
       final body = jsonDecode(res.body) as Map<String, dynamic>;
       final current = body['current'] as Map<String, dynamic>;
@@ -37,6 +39,13 @@ class WeatherService {
         tempC: (current['temperature_2m'] as num).toDouble(),
         humidity: (current['relative_humidity_2m'] as num).toDouble(),
         rainMm: rainMm,
+        weatherCode: (current['weather_code'] as num?)?.toInt() ?? 0,
+        windSpeedKmH: (current['wind_speed_10m'] as num?)?.toDouble() ?? 0.0,
+        apparentTempC: (current['apparent_temperature'] as num?)?.toDouble(),
+        locationName: locationName,
+        lat: lat,
+        lon: lon,
+        isGpsLocation: isGpsLocation,
         fetchedAt: DateTime.now(),
       );
     } catch (_) {
