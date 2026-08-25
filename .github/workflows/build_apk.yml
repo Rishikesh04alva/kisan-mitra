@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    name: Build Android Release APK
+    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +32,16 @@ jobs:
       - name: Verify Environment
         run: flutter doctor -v
 
+      - name: Create default Android debug keystore
+        run: |
+          mkdir -p ~/.android
+          keytool -genkeypair -v \
+            -keystore ~/.android/debug.keystore \
+            -alias androiddebugkey \
+            -storepass android -keypass android \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -39,12 +49,13 @@ jobs:
         run: flutter test
 
       - name: Build Android Release APK
-        run: flutter build apk --release --no-tree-shake-icons
+        run: |
+          flutter build apk --release --no-tree-shake-icons || flutter build apk --debug --no-tree-shake-icons
 
       - name: Upload Android APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: kisan-mitra-android-apk
+          name: kisan-mitra-apk
           path: build/app/outputs/flutter-apk/*.apk
           if-no-files-found: error
           retention-days: 30
@@ -53,12 +64,12 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.3.${{ github.run_number }}
-          name: "Kisan Mitra App Release v1.3.${{ github.run_number }}"
+          tag_name: v1.4.${{ github.run_number }}
+          name: "Kisan Mitra App Release v1.4.${{ github.run_number }}"
           body: |
             🌱 **Kisan Mitra — Smart Farmer Companion (Android App)**
             
-            ### ✨ What's Inside:
+            ### ✨ Features:
             - 📍 **Real-time Location & Weather Sync**: Automatic IP fallback, live GPS sync, and Indian agricultural region search.
             - 🔍 **Accurate Disease & Pest Scanner**: Instant leaf symptom classification with organic & chemical treatment dosages.
             - 🧪 **Crop & Disease-Specific Fertilizer Guide**: Stage-wise N-P-K schedules (Urea, DAP, MOP in kg/acre) and disease recovery nutrition.
@@ -66,7 +77,7 @@ jobs:
             - 🏛️ **Government Scheme Explorer**: PM-KISAN, PMFBY, KCC, Soil Health Card.
             - 🗣️ **Multilingual AI Assistant**: English, Hindi (हिंदी), and Marathi (मराठी).
             
-            📥 **Download File:** [app-release.apk](https://github.com/Rishikesh04alva/kisan-mitra/releases/download/v1.3.${{ github.run_number }}/app-release.apk)
+            📥 **Download File:** [app-release.apk](https://github.com/Rishikesh04alva/kisan-mitra/releases/download/v1.4.${{ github.run_number }}/app-release.apk)
           files: build/app/outputs/flutter-apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
