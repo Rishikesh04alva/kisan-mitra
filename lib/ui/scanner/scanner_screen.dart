@@ -166,14 +166,17 @@ class _ResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final lang = s.code;
     final healthy = record.healthy;
     final uncertain = prediction?.uncertain ?? false;
+    final blurry = prediction?.blurry ?? false;
     final info = kb[record.label];
     final Color bg = healthy
         ? AppColors.green
         : uncertain
             ? AppColors.yellow
             : AppColors.red;
+    final onBg = healthy || !uncertain ? Colors.white : AppColors.ink;
 
     return NeoCard(
       color: bg,
@@ -198,56 +201,34 @@ class _ResultCard extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge!
-                          .copyWith(color: Colors.white),
+                          .copyWith(color: onBg),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       _prettyLabel(record.label),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.w800),
+                          color: onBg, fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          if (!healthy && !uncertain) ...[
+          if (!healthy && !uncertain && info != null) ...[
             const SizedBox(height: 8),
             Text(
-              info?.desc ?? '',
+              info.tx('desc', lang),
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.white, fontWeight: FontWeight.w600),
             ),
           ],
-          if (uncertain) ...[
+          if (blurry) ...[
             const SizedBox(height: 8),
-            Text(s.t('retake_hint'),
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColors.ink, fontWeight: FontWeight.w700)),
+            Text('📸 ${s.t('blurry_hint')}',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColors.ink, fontWeight: FontWeight.w800)),
           ],
-          const SizedBox(height: 10),
-          Text(
-            '${s.t('confidence')}: ${(record.confidence * 100).toStringAsFixed(0)}%',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: healthy || !uncertain ? Colors.white : AppColors.ink),
-          ),
-          const SizedBox(height: 6),
-          ConfidenceBar(value: record.confidence),
-          if (!healthy && !uncertain && (prediction?.top.length ?? 0) > 1) ...[
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
-              children: prediction!.top.skip(1).map((e) => NeoBadge(
-                    text:
-                        '${_prettyLabel(e.key)} ${(e.value * 100).round()}%',
-                    color: Colors.white,
-                  )).toList(),
-            ),
-          ],
-          if (!healthy && !uncertain) ...[
+          if (!healthy && !uncertain && info != null) ...[
             const SizedBox(height: 14),
             NeoCard(
               color: Colors.white,
@@ -267,22 +248,28 @@ class _ResultCard extends StatelessWidget {
                   _TxRow(
                       emoji: '🌿',
                       title: s.t('organic_head'),
-                      body: info?.organic ?? s.t(record.txKey)),
+                      body: info.tx('organic', lang).isNotEmpty
+                          ? info.tx('organic', lang)
+                          : s.t(record.txKey)),
                   const SizedBox(height: 10),
                   _TxRow(
                       emoji: '🧪',
                       title: s.t('chemical_head'),
-                      body: info?.chemical ?? ''),
+                      body: info.tx('chemical', lang)),
                   const SizedBox(height: 10),
                   _TxRow(
                       emoji: '🛡️',
                       title: s.t('prevention_head'),
-                      body: info?.prevention ?? ''),
+                      body: info.tx('prevention', lang)),
                   const SizedBox(height: 10),
                   _TxRow(
                       emoji: '🌾',
                       title: s.t('fert_advice'),
-                      body: '${NutritionService.getDiseaseNutritionAdvice(record.label).nitrogenRule}\n\n${NutritionService.getDiseaseNutritionAdvice(record.label).potashPhosphorusRule}\n\n${NutritionService.getDiseaseNutritionAdvice(record.label).micronutrientSpray}\n\n${NutritionService.getDiseaseNutritionAdvice(record.label).bioFertilizer}'),
+                      body: () {
+                        final n =
+                            NutritionService.getAdviceLocalized(record.label, lang);
+                        return '${n.nitrogenRule}\n\n${n.potashPhosphorusRule}\n\n${n.micronutrientSpray}\n\n${n.bioFertilizer}';
+                      }()),
                   const SizedBox(height: 8),
                   Text(
                     s.t('dose_note'),
@@ -293,10 +280,48 @@ class _ResultCard extends StatelessWidget {
               ),
             ),
           ],
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Text('${s.t('confidence')}: ${(record.confidence * 100).toStringAsFixed(0)}%',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: onBg, fontWeight: FontWeight.w800)),
+              const SizedBox(width: 8),
+              NeoBadge(text: _confLabel(record.confidence, s), color: Colors.white),
+            ],
+          ),
+          const SizedBox(height: 6),
+          ConfidenceBar(value: record.confidence),
+          if ((prediction?.top.length ?? 0) > 1) ...[
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: prediction!.top.skip(1).take(2).map((e) => NeoBadge(
+                    text:
+                        '${_prettyLabel(e.key)} ${(e.value * 100).round()}%',
+                    color: Colors.white,
+                  )).toList(),
+            ),
+          ],
+          if (uncertain) ...[
+            const SizedBox(height: 8),
+            Text(s.t('retake_hint'),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: AppColors.ink, fontWeight: FontWeight.w700)),
+          ],
           const SizedBox(height: 12),
         ],
       ),
     );
+  }
+
+  static String _confLabel(double c, S s) {
+    if (c >= 0.80) return '💪 ${s.t('conf_high')}';
+    if (c >= 0.55) return '👌 ${s.t('conf_medium')}';
+    return '❓ ${s.t('conf_low')}';
   }
 }
 

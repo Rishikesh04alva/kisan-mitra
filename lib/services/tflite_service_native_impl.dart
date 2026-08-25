@@ -19,6 +19,7 @@ class _NativeTfliteService extends TfliteServiceBase {
   bool _loaded = false;
 
   static const double _uncertainThreshold = 0.55;
+  static const double _blurThreshold = 18.0;
 
   @override
   bool get isLoaded => _loaded && _interpreter != null;
@@ -50,12 +51,15 @@ class _NativeTfliteService extends TfliteServiceBase {
     }
   }
 
-  img.Image _prepare(img.Image src) {
+  /// Square crop of the requested size from the image centre.
+  /// [zoomFrac] < 1 crops a tighter region (drops background edges).
+  img.Image _square(img.Image src, double zoomFrac) {
     final w = src.width, h = src.height;
-    final side = w < h ? w : h;
-    final x0 = (w - side) ~/ 2, y0 = (h - side) ~/ 2;
+    var side = (w < h ? w : h);
+    final inner = (side * zoomFrac).round();
+    final x0 = (w - inner) ~/ 2, y0 = (h - inner) ~/ 2;
     final cropped =
-        img.copyCrop(src, x: x0, y: y0, width: side, height: side);
+        img.copyCrop(src, x: x0, y: y0, width: inner, height: inner);
     return img.copyResize(cropped,
         width: _inputSize,
         height: _inputSize,
@@ -76,11 +80,72 @@ class _NativeTfliteService extends TfliteServiceBase {
     });
   }
 
+  /// Laplacian variance on the small square — cheap focus/blur estimate.
+  double _blurScore(img.Image im) {
+    const n = _inputSize;
+    final g = Float64List(n * n);
+    for (var y = 0; y < n; y++) {
+      for (var x = 0; x < n; x++) {
+        final px = im.getPixel(x, y);
+        g[y * n + x] = 0.299 * px.r + 0.587 * px.g + 0.114 * px.b;
+      }
+    }
+    var sum = 0.0, sumSq = 0.0;
+    var count = 0;
+    for (var y = 1; y < n - 1; y++) {
+      for (var x = 1; x < n - 1; x++) {
+        final c = g[y * n + x];
+        final lap = (g[(y - 1) * n + x] +
+                g[(y + 1) * n + x] +
+                g[y * n + x - 1] +
+                g[y * n + x + 1] -
+                4 * c)
+            .abs();
+        sum += lap;
+        sumSq += lap * lap;
+        count++;
+      }
+    }
+    if (count == 0) return 999;
+    final mean = sum / count;
+    return sumSq / count - mean * mean;
+  }
+
+  void _run(List<List<List<double>>> input, List<double> out) {
+    _interpreter!.run([input], [out]);
+  }
+
+  /// Softmax-if-needed, then accumulate into [acc].
+  void _accumulate(List<double> single, List<double> acc) {
+    final n = single.length;
+    var sum = 0.0;
+    var lo = 0.0, hi = 0.0;
+    for (final v in single) {
+      sum += v;
+      if (v < lo) lo = v;
+      if (v > hi) hi = v;
+    }
+    if (hi > 1.001 || lo < -0.001 || (sum - 1.0).abs() > 0.05) {
+      final maxV = hi;
+      var expSum = 0.0;
+      for (var i = 0; i < n; i++) {
+        single[i] = math.exp(single[i] - maxV);
+        expSum += single[i];
+      }
+      for (var i = 0; i < n; i++) {
+        single[i] /= expSum;
+      }
+    }
+    for (var i = 0; i < n; i++) {
+      acc[i] += single[i];
+    }
+  }
+
   @override
   ScanPrediction predict(Uint8List bytes) {
     if (!isLoaded) {
       if (kDemoModelFallback) {
-        final p = _demoPredict(bytes);
+        final p = ImageAnalysisService.analyzeImage(bytes);
         return ScanPrediction(
             label: p.label,
             confidence: p.confidence,
@@ -91,36 +156,30 @@ class _NativeTfliteService extends TfliteServiceBase {
     }
     final decoded = img.decodeImage(bytes);
     if (decoded == null) throw StateError('bad_image');
-    final prepared = _prepare(decoded);
+
+    // Phone-camera JPEGs are frequently stored rotated (EXIF orientation).
+    // Without this the model sees sideways leaves and misclassifies.
+    final upright = img.bakeOrientation(decoded);
+
+    final full = _square(upright, 1.0);
+    final tight = _square(upright, 0.85);
+
+    final blurry = _blurScore(full) < _blurThreshold;
 
     final n = _labels.length;
     final acc = List<double>.filled(n, 0.0);
     final single = List<double>.filled(n, 0.0);
 
-    for (final flip in [false, true]) {
-      final input = _tensor(prepared, flip);
-      _interpreter!.run([input], [single]);
-      var sum = 0.0;
-      var lo = 0.0, hi = 0.0;
-      for (final v in single) {
-        sum += v;
-        if (v < lo) lo = v;
-        if (v > hi) hi = v;
+    // 4-view test-time augmentation: {full, tight} x {original, flipped}.
+    for (final view in [full, tight]) {
+      for (final flip in [false, true]) {
+        final input = _tensor(view, flip);
+        _run(input, single);
+        _accumulate(single, acc);
       }
-      if (hi > 1.001 || lo < -0.001 || (sum - 1.0).abs() > 0.05) {
-        final maxV = hi;
-        var expSum = 0.0;
-        for (var i = 0; i < n; i++) {
-          single[i] = math.exp(single[i] - maxV);
-          expSum += single[i];
-        }
-        for (var i = 0; i < n; i++) {
-          single[i] /= expSum;
-        }
-      }
-      for (var i = 0; i < n; i++) {
-        acc[i] += single[i] / 2.0;
-      }
+    }
+    for (var i = 0; i < n; i++) {
+      acc[i] /= 4.0;
     }
 
     final ranked = List<int>.generate(n, (i) => i)
@@ -134,7 +193,8 @@ class _NativeTfliteService extends TfliteServiceBase {
       label: top.first.key,
       confidence: top.first.value,
       top: top,
-      uncertain: top.first.value < _uncertainThreshold,
+      uncertain: top.first.value < _uncertainThreshold || blurry,
+      blurry: blurry,
     );
   }
 
@@ -143,9 +203,5 @@ class _NativeTfliteService extends TfliteServiceBase {
     _interpreter?.close();
     _interpreter = null;
     _loaded = false;
-  }
-
-  ScanPrediction _demoPredict(Uint8List bytes) {
-    return ImageAnalysisService.analyzeImage(bytes);
   }
 }

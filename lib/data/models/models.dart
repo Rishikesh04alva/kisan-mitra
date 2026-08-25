@@ -76,6 +76,9 @@ class DiseaseInfo {
   final String chemical;
   final String prevention;
 
+  /// Per-language text: lang -> {desc, organic, chemical, prevention}.
+  final Map<String, Map<String, String>> i18n;
+
   const DiseaseInfo({
     required this.label,
     required this.crop,
@@ -84,6 +87,7 @@ class DiseaseInfo {
     required this.organic,
     required this.chemical,
     required this.prevention,
+    this.i18n = const {},
   });
 
   factory DiseaseInfo.fromJson(String label, Map<String, dynamic> j) =>
@@ -95,7 +99,32 @@ class DiseaseInfo {
         organic: j['organic'] as String? ?? '',
         chemical: j['chemical'] as String? ?? '',
         prevention: j['prevention'] as String? ?? '',
+        i18n: (j['i18n'] as Map<String, dynamic>? ?? const {}).map(
+          (lang, v) => MapEntry(
+            lang,
+            (v as Map<String, dynamic>)
+                .map((k, v2) => MapEntry(k, v2?.toString() ?? '')),
+          ),
+        ),
       );
+
+  /// Localized [field] ('desc'|'organic'|'chemical'|'prevention') for
+  /// [lang]; falls back to the English top-level field.
+  String tx(String field, String lang) {
+    final v = i18n[lang]?[field];
+    if (v != null && v.isNotEmpty) return v;
+    switch (field) {
+      case 'organic':
+        return organic;
+      case 'chemical':
+        return chemical;
+      case 'prevention':
+        return prevention;
+      case 'desc':
+      default:
+        return desc;
+    }
+  }
 }
 
 class FieldPlot {

@@ -1,3 +1,5 @@
+import 'nutrition_i18n.dart';
+
 class DiseaseNutritionPlan {
   final String diseaseName;
   final String headline;
@@ -105,6 +107,33 @@ class NutritionService {
       potashPhosphorusRule: '🌿 NPK 10:26:26 or DAP+MOP: Feed base nutrients at proper depth away from stems.',
       micronutrientSpray: '💧 FOLIAR BOOST: Spray Multi-micronutrient Grade-4 (2 g/L) during active growth.',
       bioFertilizer: '🌱 ORGANIC MATTER: Incorporate farmyard manure or vermicompost 2 tons/acre annually.',
+    );
+  }
+
+  static String _categoryOf(String label) {
+    final l = label.toLowerCase();
+    if (l.contains('late_blight') || l.contains('early_blight') || l.contains('leaf_blight')) return 'blight';
+    if (l.contains('rust')) return 'rust';
+    if (l.contains('mildew') || l.contains('mold') || l.contains('scab')) return 'mildew';
+    if (l.contains('bacterial')) return 'bacterial';
+    if (l.contains('mite') || l.contains('spider')) return 'mite';
+    if (l.contains('virus') || l.contains('curl') || l.contains('mosaic') || l.contains('greening')) return 'virus';
+    if (l.contains('rot') || l.contains('wilt')) return 'rot';
+    return 'general';
+  }
+
+  static DiseaseNutritionPlan getAdviceLocalized(String label, String lang) {
+    final base = getDiseaseNutritionAdvice(label);
+    final cat = kNutritionI18n[_categoryOf(label)];
+    final t = cat?[lang] ?? cat?['en'];
+    if (t == null || t.length < 4) return base;
+    return DiseaseNutritionPlan(
+      diseaseName: base.diseaseName,
+      headline: base.headline,
+      nitrogenRule: t[0],
+      potashPhosphorusRule: t[1],
+      micronutrientSpray: t[2],
+      bioFertilizer: t[3],
     );
   }
 }

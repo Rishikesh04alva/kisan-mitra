@@ -338,7 +338,7 @@ class _DiseaseNutritionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final advice = NutritionService.getDiseaseNutritionAdvice(scan.label);
+    final advice = NutritionService.getAdviceLocalized(scan.label, s.code);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
