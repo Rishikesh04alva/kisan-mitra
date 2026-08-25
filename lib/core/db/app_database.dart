@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import '../../data/models/models.dart';
 import '../constants.dart';
@@ -110,21 +108,6 @@ class AppDatabase {
 
   Future<void> init() async {
     if (_db != null) return;
-    if (kIsWeb) {
-      // On web, use in-memory database with sqflite_ffi_web
-      _db = await databaseFactoryFfiWeb.openDatabase(
-        'kisan_mitra',
-        options: OpenDatabaseOptions(
-          version: 1,
-          onCreate: (d, v) async {
-            await _createTables(d);
-            await _populateGrid(d);
-          },
-        ),
-      );
-      await _ensureSchemaUpgrades(_db!);
-      return;
-    }
     final dir = await getDatabasesPath();
     _db = await openDatabase(
       p.join(dir, 'kisan_mitra.db'),
