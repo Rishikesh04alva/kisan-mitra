@@ -20,6 +20,10 @@ class ScannerProvider extends ChangeNotifier {
   List<ScanRecord> history = [];
   Map<String, DiseaseInfo> kb = {};
 
+  String? lastCropPrefix;
+  String? lastCropDisplay;
+  int? lastAgeDays;
+
   ScannerProvider(this.db, this.tflite);
 
   Future<void> init() async {
@@ -36,11 +40,12 @@ class ScannerProvider extends ChangeNotifier {
 
   bool get isHealthy => lastResult?.healthy ?? false;
 
-  Future<void> analyze(String imagePath, Uint8List bytes) async {
+  Future<void> analyze(String imagePath, Uint8List bytes,
+      {String? cropPrefix, String? cropDisplay, int? ageDays}) async {
     state = ScanState.analyzing;
     notifyListeners();
     try {
-      final prediction = tflite.predict(bytes);
+      final prediction = tflite.predict(bytes, cropPrefix: cropPrefix);
       final record = ScanRecord(
         id: 's_${DateTime.now().millisecondsSinceEpoch}',
         imagePath: imagePath,
@@ -52,6 +57,9 @@ class ScannerProvider extends ChangeNotifier {
       lastResult = record;
       lastPrediction = prediction;
       lastWasDemo = prediction.demo;
+      lastCropPrefix = cropPrefix;
+      lastCropDisplay = cropDisplay;
+      lastAgeDays = ageDays;
       state = ScanState.done;
     } catch (e) {
       errorKey =

@@ -12,7 +12,10 @@ export 'scan_prediction.dart';
 abstract class TfliteServiceBase {
   bool get isLoaded;
   Future<void> load();
-  ScanPrediction predict(Uint8List bytes);
+
+  /// [cropPrefix] optionally restricts the winning class to one crop's
+  /// labels (e.g. 'Tomato'), while global top-3 stay visible as alternatives.
+  ScanPrediction predict(Uint8List bytes, {String? cropPrefix});
   void close();
 }
 

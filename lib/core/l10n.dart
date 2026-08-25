@@ -2,6 +2,13 @@ import 'package:flutter/widgets.dart';
 
 final Map<String, Map<String, String>> kStrings = {
   'en': {
+    'ctx_title': 'Crop details (optional, improves accuracy)',
+    'ctx_crop_hint': 'Which plant? e.g., tomato',
+    'ctx_age_hint': 'Plant age in days (optional)',
+    'ctx_filtered': '✅ Checked only {crop} diseases',
+    'ctx_age_note': '🌿 Young plant: prefer organic option at half dose.',
+    'ctx_days': 'days',
+
     'app_title': 'KISAN MITRA',
     'tagline': 'Works without internet',
     'nav_home': 'Home',
@@ -215,6 +222,13 @@ final Map<String, Map<String, String>> kStrings = {
 
   },
   'hi': {
+    'ctx_title': 'फसल जानकारी (वैकल्पिक, सटीकता बढ़ाती है)',
+    'ctx_crop_hint': 'कौन सा पौधा? जैसे टमाटर',
+    'ctx_age_hint': 'पौधे की उम्र दिनों में (वैकल्पिक)',
+    'ctx_filtered': '✅ केवल {crop} के रोग जाँचे',
+    'ctx_age_note': '🌿 छोटा पौधा: जैविक विकल्प आधी खुराक पर चुनें।',
+    'ctx_days': 'दिन',
+
     'app_title': 'किसान मित्र',
     'tagline': 'बिना इंटरनेट भी काम करता है',
     'nav_home': 'होम',
@@ -426,6 +440,13 @@ final Map<String, Map<String, String>> kStrings = {
 
   },
   'mr': {
+    'ctx_title': 'पीक माहिती (ऐच्छिक, अचूकता सुधारते)',
+    'ctx_crop_hint': 'कोणते झाड? उदा. टोमॅटो',
+    'ctx_age_hint': 'झाडाचे वय दिवसांत (ऐच्छिक)',
+    'ctx_filtered': '✅ फक्त {crop} चे रोग तपासले',
+    'ctx_age_note': '🌿 लहान झाड: सेंद्रिय पर्याय अर्धा डोस निवडा.',
+    'ctx_days': 'दिवस',
+
     'app_title': 'शेतकरी मित्र',
     'tagline': 'इंटरनेटशिवायही चालते',
     'nav_home': 'होम',
@@ -637,6 +658,13 @@ final Map<String, Map<String, String>> kStrings = {
 
   },
   'kn': {
+    'ctx_title': 'ಬೆಳೆ ವಿವರ (ಐಚ್ಛಿಕ, ನಿಖರತೆ ಸುಧಾರಿಸುತ್ತದೆ)',
+    'ctx_crop_hint': 'ಯಾವ ಸಸ್ಯ? ಉದಾ. ಟೊಮ್ಯಾಟೊ',
+    'ctx_age_hint': 'ಸಸ್ಯದ ವಯಸ್ಸು ದಿನಗಳಲ್ಲಿ (ಐಚ್ಛಿಕ)',
+    'ctx_filtered': '✅ {crop} ರೋಗಗಳನ್ನಷ್ಟೇ ಪರಿಶೀಲಿಸಲಾಗಿದೆ',
+    'ctx_age_note': '🌿 ಎಳೆಯ ಸಸ್ಯ: ಅರ್ಧ ಪ್ರಮಾಣದಲ್ಲಿ ಜೈವಿಕ ಆಯ್ಕೆ ಮಾಡಿ.',
+    'ctx_days': 'ದಿನಗಳು',
+
     'app_title': 'ಕೃಷಿ ಮಿತ್ರ',
     'tagline': 'ಇಂಟರ್ನೆಟ್ ಇಲ್ಲದೆಯೂ ಕೆಲಸ ಮಾಡುತ್ತದೆ',
     'nav_home': 'ಹೋಮ್',
@@ -828,6 +856,13 @@ final Map<String, Map<String, String>> kStrings = {
 
   },
   'ta': {
+    'ctx_title': 'பயிர் விவரம் (விருப்பம், துல்லியத்தை மேம்படுத்தும்)',
+    'ctx_crop_hint': 'எந்தச் செடி? எ.கா. தக்காளி',
+    'ctx_age_hint': 'செடியின் வயது நாட்களில் (விருப்பம்)',
+    'ctx_filtered': '✅ {crop} நோய்கள் மட்டும் சரிபார்க்கப்பட்டது',
+    'ctx_age_note': '🌿 இளம் செடி: அரை அளவில் இயற்கை விருப்பத்தைத் தேர்வு செய்யவும்.',
+    'ctx_days': 'நாட்கள்',
+
     'app_title': 'கிசான் மித்ரா',
     'tagline': 'இணையம் இல்லாமலும் இயங்கும்',
     'nav_home': 'முகப்பு',
@@ -1019,6 +1054,13 @@ final Map<String, Map<String, String>> kStrings = {
 
   },
   'te': {
+    'ctx_title': 'పంట వివరాలు (ఐచ్ఛికం, ఖచ్చితత్వం పెంచుతుంది)',
+    'ctx_crop_hint': 'ఏ మొక్క? ఉదా. టమాటా',
+    'ctx_age_hint': 'మొక్క వయస్సు రోజుల్లో (ఐచ్ఛికం)',
+    'ctx_filtered': '✅ {crop} తెగుళ్లను మాత్రమే తనిఖీ చేశారు',
+    'ctx_age_note': '🌿 పసి మొక్క: సగం మోతాదులో జీవిక ఎంపిక మంచిది.',
+    'ctx_days': 'రోజులు',
+
     'app_title': 'కిసాన్ మిత్ర',
     'tagline': 'ఇంటర్నెట్ లేకుండానే పనిచేస్తుంది',
     'nav_home': 'హోమ్',
@@ -1210,6 +1252,13 @@ final Map<String, Map<String, String>> kStrings = {
 
   },
   'ml': {
+    'ctx_title': 'വിള വിവരം (ഓപ്ഷണൽ, കൃത്യത മെച്ചപ്പെടുത്തും)',
+    'ctx_crop_hint': 'ഏത് ചെടി? ഉദാ. തക്കാളി',
+    'ctx_age_hint': 'ചെടിയുടെ പ്രായം ദിവസങ്ങളിൽ (ഓപ്ഷണൽ)',
+    'ctx_filtered': '✅ {crop} രോഗങ്ങൾ മാത്രം പരിശോധിച്ചു',
+    'ctx_age_note': '🌿 പിടിച്ച ചെടി: പകുതി അളവിൽ ജൈവ ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക.',
+    'ctx_days': 'ദിവസം',
+
     'app_title': 'കിസാൻ മിത്ര',
     'tagline': 'ഇന്റർനെറ്റ് ഇല്ലാതെയും പ്രവർത്തിക്കും',
     'nav_home': 'ഹോം',

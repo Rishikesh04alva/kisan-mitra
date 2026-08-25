@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/l10n.dart';
 import '../../core/theme.dart';
@@ -9,6 +10,7 @@ import '../../data/models/models.dart';
 import '../../providers/scanner_provider.dart';
 import '../../services/nutrition_service.dart';
 import '../../services/scan_prediction.dart';
+import '../../services/crop_catalog.dart';
 import '../widgets/common.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -20,6 +22,44 @@ class ScannerScreen extends StatefulWidget {
 
 class _ScannerScreenState extends State<ScannerScreen> {
   final ImagePicker _picker = ImagePicker();
+  final TextEditingController _cropCtrl = TextEditingController();
+  final TextEditingController _ageCtrl = TextEditingController();
+  String? _selectedCropPrefix;
+  String? _selectedCropDisplay;
+  bool _prefsLoaded = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_prefsLoaded) return;
+    _prefsLoaded = true;
+    _loadPrefs();
+  }
+
+  Future<void> _loadPrefs() async {
+    final sp = await SharedPreferences.getInstance();
+    final prefix = sp.getString('scan_crop_prefix');
+    final age = sp.getString('scan_age_days');
+    if (!mounted) return;
+    final s = S.of(context);
+    if (prefix != null && prefix.isNotEmpty) {
+      final opt = kCropCatalog
+          .firstWhere((c) => c.prefix == prefix, orElse: () => kCropCatalog.first);
+      setState(() {
+        _selectedCropPrefix = opt.prefix;
+        _selectedCropDisplay = opt.names[s.code] ?? opt.names['en'];
+        _cropCtrl.text = _selectedCropDisplay!;
+      });
+    }
+    if (age != null) _ageCtrl.text = age;
+  }
+
+  @override
+  void dispose() {
+    _cropCtrl.dispose();
+    _ageCtrl.dispose();
+    super.dispose();
+  }
 
   Future<void> _pick(ImageSource source) async {
     final s = S.of(context);
@@ -32,7 +72,29 @@ class _ScannerScreenState extends State<ScannerScreen> {
       if (xfile == null) return;
       final bytes = await xfile.readAsBytes();
       if (!mounted) return;
-      await context.read<ScannerProvider>().analyze(xfile.path, bytes);
+
+      final cropOpt = _selectedCropPrefix != null
+          ? kCropCatalog.firstWhere(
+              (c) => c.prefix == _selectedCropPrefix,
+              orElse: () => kCropCatalog.first,
+            )
+          : matchCrop(_cropCtrl.text);
+      final prefix = cropOpt?.prefix;
+      final display =
+          cropOpt?.names[s.code] ?? cropOpt?.names['en'];
+      final age = int.tryParse(_ageCtrl.text.trim());
+
+      await context.read<ScannerProvider>().analyze(
+            xfile.path,
+            bytes,
+            cropPrefix: prefix,
+            cropDisplay: display,
+            ageDays: age,
+          );
+
+      final sp = await SharedPreferences.getInstance();
+      sp.setString('scan_crop_prefix', prefix ?? '');
+      sp.setString('scan_age_days', _ageCtrl.text.trim());
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -72,6 +134,110 @@ class _ScannerScreenState extends State<ScannerScreen> {
             ),
           ),
           const SizedBox(height: 14),
+          NeoCard(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('🌱', style: TextStyle(fontSize: 20)),
+                      const SizedBox(width: 6),
+                      Text(s.t('ctx_title'),
+                          style:
+                              Theme.of(context).textTheme.titleMedium),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Autocomplete<CropOption>(
+                    initialValue: _selectedCropDisplay != null
+                        ? TextEditingValue(text: _selectedCropDisplay!)
+                        : TextEditingValue.empty,
+                    optionsBuilder: (v) {
+                      final q = v.text.trim().toLowerCase();
+                      if (q.isEmpty) return kCropCatalog;
+                      final matches = kCropCatalog.where((c) {
+                        for (final n in [
+                          c.names['en']!,
+                          ...c.names.values,
+                          ...c.aliases,
+                          c.prefix.toLowerCase()
+                        ]) {
+                          final nLow = n.toLowerCase();
+                          if (nLow.contains(q) || q.contains(nLow))
+                            return true;
+                        }
+                        return false;
+                      });
+                      return matches.isEmpty ? kCropCatalog : matches;
+                    },
+                    displayStringForOption: (o) =>
+                        o.names[s.code] ?? o.names['en']!,
+                    onSelected: (o) {
+                      final name =
+                          o.names[s.code] ?? o.names['en']!;
+                      setState(() {
+                        _selectedCropPrefix = o.prefix;
+                        _selectedCropDisplay = name;
+                        _cropCtrl.text = name;
+                      });
+                    },
+                    fieldViewBuilder:
+                        (ctx, ctrl, focusNode, onSubmitted) {
+                      return TextField(
+                        controller: ctrl,
+                        focusNode: focusNode,
+                        decoration: InputDecoration(
+                          hintText: s.t('ctx_crop_hint'),
+                          isDense: true,
+                        ),
+                        onSubmitted: (_) => onSubmitted(),
+                      );
+                    },
+                    optionsViewBuilder: (ctx, onSelected, options) {
+                      return Align(
+                        alignment: Alignment.topLeft,
+                        child: Material(
+                          elevation: 4,
+                          child: ConstrainedBox(
+                            constraints:
+                                const BoxConstraints(maxHeight: 180),
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: options.length,
+                              itemBuilder: (ctx, i) {
+                                final o = options.elementAt(i);
+                                final name =
+                                    o.names[s.code] ?? o.names['en']!;
+                                return ListTile(
+                                  dense: true,
+                                  leading: Text(o.emoji),
+                                  title: Text(name),
+                                  onTap: () => onSelected(o),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _ageCtrl,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: s.t('ctx_age_hint'),
+                      suffixText: s.t('ctx_days'),
+                      isDense: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           Row(
             children: [
               Expanded(
@@ -121,6 +287,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
               demo: scanner.lastWasDemo,
               prediction: scanner.lastPrediction,
               kb: scanner.kb,
+              cropDisplay: scanner.lastCropDisplay,
+              ageDays: scanner.lastAgeDays,
+              cropPrefix: scanner.lastCropPrefix,
             ),
           if (scanner.state == ScanState.error)
             NeoCard(
@@ -155,12 +324,18 @@ class _ResultCard extends StatelessWidget {
   final bool demo;
   final ScanPrediction? prediction;
   final Map<String, DiseaseInfo> kb;
+  final String? cropDisplay;
+  final int? ageDays;
+  final String? cropPrefix;
 
   const _ResultCard({
     required this.record,
     required this.demo,
     this.prediction,
     this.kb = const {},
+    this.cropDisplay,
+    this.ageDays,
+    this.cropPrefix,
   });
 
   @override
@@ -227,6 +402,34 @@ class _ResultCard extends StatelessWidget {
             Text('📸 ${s.t('blurry_hint')}',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: AppColors.ink, fontWeight: FontWeight.w800)),
+          ],
+          if ((cropDisplay != null && cropDisplay!.isNotEmpty) ||
+              ageDays != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              '🌱 ${cropDisplay ?? ""}${ageDays != null ? ' · $ageDays ${s.t('ctx_days')}' : ''}',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: onBg),
+            ),
+          ],
+          if (prediction?.cropFiltered == true &&
+              cropDisplay != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              s.t('ctx_filtered').replaceAll('{crop}', cropDisplay!),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: onBg, fontWeight: FontWeight.w700),
+            ),
+          ],
+          if ((ageDays ?? 999) <= 30) ...[
+            const SizedBox(height: 6),
+            Text(s.t('ctx_age_note'),
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: onBg,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w700)),
           ],
           if (!healthy && !uncertain && info != null) ...[
             const SizedBox(height: 14),

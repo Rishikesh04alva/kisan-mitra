@@ -8,6 +8,9 @@ class ScanPrediction {
   /// Photo was too blurry for a reliable reading.
   final bool blurry;
 
+  /// A user-selected crop constrained which disease classes could win.
+  final bool cropFiltered;
+
   const ScanPrediction({
     required this.label,
     required this.confidence,
@@ -15,5 +18,6 @@ class ScanPrediction {
     this.top = const [],
     this.uncertain = false,
     this.blurry = false,
+    this.cropFiltered = false,
   });
 }

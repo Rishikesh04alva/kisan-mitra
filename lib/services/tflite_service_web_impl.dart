@@ -16,7 +16,7 @@ class _WebTfliteService extends TfliteServiceBase {
   }
 
   @override
-  ScanPrediction predict(Uint8List bytes) {
+  ScanPrediction predict(Uint8List bytes, {String? cropPrefix}) {
     return ImageAnalysisService.analyzeImage(bytes);
   }
 
