@@ -35,6 +35,11 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^4.0.0
 
+dependency_overrides:
+  # geolocator_android 4.6.2 requires Flutter >=3.27 (uses flutter.compileSdkVersion);
+  # 4.6.1 keeps static SDK values and builds fine on the pinned Flutter 3.24.5.
+  geolocator_android: 4.6.1
+
 flutter:
   uses-material-design: true
   assets:
